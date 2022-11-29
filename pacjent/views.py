@@ -28,7 +28,8 @@ class LoginView(View):
                 login(request, user)
             else:
                 form.add_error(None, "Zły numer pesel lub hasło")
-            return render(request, 'pacjentapp/login.html', {'form': form})
+                return render(request, 'pacjentapp/login.html', {'form': form})
+
 #TODO: Change link after login
 
 
@@ -65,6 +66,7 @@ class AddNewPatient(View):
                                                    last_name=last_name,
                                                    password=password,
                                                    email=mail)
+            new_patient = User.objects.get(username=pesel)
             new_patient.patient.pesel = pesel
             new_patient.patient.date_of_birth = date_of_birth
             new_patient.patient.street = street
