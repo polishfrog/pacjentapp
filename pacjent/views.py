@@ -61,20 +61,25 @@ class AddNewPatient(View):
             post_code = form.cleaned_data.get('post_code')
             city = form.cleaned_data.get('city')
             mail = form.cleaned_data.get('mail')
+
             new_patient = User.objects.create_user(username=pesel,
                                                    first_name=first_name,
                                                    last_name=last_name,
                                                    password=password,
                                                    email=mail)
-            setting = new_patient.patient
-            setting.pesel = pesel
-            setting.date_of_birth = date_of_birth
-            setting.street = street
-            setting.build_number = build_number
-            setting.apartment_number = apartment_number
-            setting.post_code = post_code
-            setting.city = city
-            new_patient.save()
+            profile = Patient()
+            profile.user = new_patient
+            new_patient.patient.pesel = pesel
+            new_patient.patient.date_of_birth = date_of_birth
+            new_patient.patient.street = street
+            new_patient.patient.build_number = build_number
+            new_patient.patient.apartment_number = apartment_number
+            new_patient.patient.post_code = post_code
+            new_patient.patient.city = city
+            profile.save()
+
+
+
 
             return redirect('mainview')
         return render(request, 'pacjentapp/add_patient.html', locals())

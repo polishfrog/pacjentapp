@@ -13,7 +13,7 @@ class Patient(models.Model):
             Patient - this is user which want get a test result or reservation new test
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    pesel = models.CharField(max_length=11, primary_key=True)
+    pesel = models.CharField(max_length=11)
     date_of_birth = models.DateField()
     street = models.CharField(max_length=128)
     build_number = models.CharField(max_length=16)
