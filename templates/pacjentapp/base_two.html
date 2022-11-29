@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal pacjenta</title>
+    <link type="text/css" href="../../static/mainstyle.css" rel="stylesheet">
+</head>
+<body>
+    <div class="left">
+        {% block left %}
+
+        {% endblock %}
+    </div>
+    <div class="right">
+        {{ request.user.first_name }} {{ request.user.last_name }}
+        {% block right %}
+            <a href="{% url 'add-new-patient' %}">Dodaj nowego pacjenta</a>
+        {% endblock %}
+    </div>
+</body>
+</html>

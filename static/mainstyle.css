@@ -1,0 +1,18 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: whitesmoke;
+
+}
+
+.left{
+    width: 70%;
+}
+
+.right{
+    width: 30%;
+}
+
+.left, .right{
+    display: block;
+}

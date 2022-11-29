@@ -1,0 +1,10 @@
+{% extends 'pacjentapp/base_two.html' %}
+
+{% block left %}
+    <h2>Dodaj nowego pacjenta:</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Dodaj nowego pacjenta">
+    </form>
+{% endblock %}

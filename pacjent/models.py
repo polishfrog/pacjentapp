@@ -1,16 +1,20 @@
 import datetime
 
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
 
-"""
-    Models:
-        Patient - this is user which want get a test result or reservation new test
-"""
-class Patient(models.Model):
+
+
+class Patient(AbstractBaseUser):
+    """
+        Models:
+            Patient - this is user which want get a test result or reservation new test
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     pesel = models.CharField(max_length=11, primary_key=True)
     date_of_birth = models.DateField()
     street = models.CharField(max_length=128)
@@ -21,6 +25,8 @@ class Patient(models.Model):
     city = models.CharField(max_length=128)
     mail = models.CharField(max_length=64)
 
+    USERNAME_FIELD = 'pesel'
+
 
 TEST = (
     (1, "Badanie krwi"),
@@ -29,7 +35,7 @@ TEST = (
 
 class TestResultPatient(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    name_test = models.CharField(choices=TEST)
+    name_test = models.CharField(max_length=128, choices=TEST)
     date_test = models.DateField()
     leukocytes = models.FloatField(null=True) #standard 4.1 - 10.9 #blow
     erythrocytes = models.FloatField(null=True) #standard 3.9-6.5 #blow
@@ -44,11 +50,12 @@ class TestResultPatient(models.Model):
     plcr = models.IntegerField(null=True) #standard 13-43% #blow
     neutrophils = models.IntegerField(null=True) #standard 50-70% #blow
 
-"""
-    Models:
-        Place - place
-"""
+
 class Place(models.Model):
+    """
+        Models:
+            Place - place
+    """
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=128)
     street = models.CharField(max_length=128)
