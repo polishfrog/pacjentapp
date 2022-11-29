@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import ValidationError
-from pacjent.forms import LoginForm, NewUserForm
+from pacjent.forms import LoginForm, NewUserForm, SearchForm
 from pacjent.models import Patient
 
 
@@ -23,13 +23,13 @@ class LoginView(View):
         if form.is_valid():
             pesel = form.cleaned_data.get('pesel')
             password = form.cleaned_data.get('password')
-            user = authenticate(pesel=pesel, password=password)
+            user = authenticate(username=pesel, password=password)
             if user:
                 login(request, user)
             else:
                 form.add_error(None, "Zły numer pesel lub hasło")
                 return render(request, 'pacjentapp/login.html', {'form': form})
-
+            return redirect('mainview')
 #TODO: Change link after login
 
 
@@ -66,15 +66,27 @@ class AddNewPatient(View):
                                                    last_name=last_name,
                                                    password=password,
                                                    email=mail)
-            new_patient = User.objects.get(username=pesel)
-            new_patient.patient.pesel = pesel
-            new_patient.patient.date_of_birth = date_of_birth
-            new_patient.patient.street = street
-            new_patient.patient.build_number = build_number
-            new_patient.patient.apartment_number = apartment_number
-            new_patient.patient.post_code = post_code
-            new_patient.patient.city = city
+            setting = new_patient.patient
+            setting.pesel = pesel
+            setting.date_of_birth = date_of_birth
+            setting.street = street
+            setting.build_number = build_number
+            setting.apartment_number = apartment_number
+            setting.post_code = post_code
+            setting.city = city
             new_patient.save()
 
             return redirect('mainview')
         return render(request, 'pacjentapp/add_patient.html', locals())
+
+
+class SearchPatientView(View):
+    def get(self, request):
+        form = SearchForm()
+        return render(request, 'pacjentapp/searchpatient.html', locals())
+    def post(self, request):
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            pesel = form.cleaned_data.get('pesel')
+            user = User.objects.get(username=pesel)
+

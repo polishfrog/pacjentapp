@@ -65,3 +65,7 @@ class ChangeUserDataForm(forms.Form):
 class LoginForm(forms.Form):
     pesel = forms.CharField(max_length=11)
     password = forms.CharField(max_length=32, widget=forms.PasswordInput)
+
+
+class SearchForm(forms.Form):
+    pesel = forms.CharField(max_length=11, required=True, validators=[pesel_validation])

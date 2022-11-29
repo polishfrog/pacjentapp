@@ -1,0 +1,10 @@
+{% extends 'pacjentapp/base.html' %}
+
+{% block content %}
+    <a href="{% url 'mainview' %}">Wróć</a>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Szukaj">
+    </form>
+{% endblock %}
