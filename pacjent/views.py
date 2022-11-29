@@ -45,7 +45,7 @@ class AddNewPatient(View):
         form = NewUserForm(request.POST)
         if form.is_valid():
             pesel = form.cleaned_data.get('pesel')
-            if Patient.objects.filter(pesel=pesel).exists():
+            if User.objects.filter(username=pesel).exists():
                 raise ValidationError('Ten pacjent jest już w systemie!')
             password = form.cleaned_data.get('password')
             password_repeat = form.cleaned_data.get('password_repeat')
@@ -60,18 +60,19 @@ class AddNewPatient(View):
             post_code = form.cleaned_data.get('post_code')
             city = form.cleaned_data.get('city')
             mail = form.cleaned_data.get('mail')
-            new_patient = Patient.objects.create_user(pesel=pesel,
-                                                      first_name=first_name,
-                                                      last_name=last_name,
-                                                      password=password,
-                                                      date_of_birth=date_of_birth,
-                                                      street=street,
-                                                      build_number=build_number,
-                                                      apartment_number=apartment_number,
-                                                      post_code=post_code,
-                                                      city=city,
-                                                      mail=mail
-                                                      )
+            new_patient = User.objects.create_user(username=pesel,
+                                                   first_name=first_name,
+                                                   last_name=last_name,
+                                                   password=password,
+                                                   email=mail)
+            new_patient.patient.pesel = pesel
+            new_patient.patient.date_of_birth = date_of_birth
+            new_patient.patient.street = street
+            new_patient.patient.build_number = build_number
+            new_patient.patient.apartment_number = apartment_number
+            new_patient.patient.post_code = post_code
+            new_patient.patient.city = city
+            new_patient.save()
 
             return redirect('mainview')
         return render(request, 'pacjentapp/add_patient.html', locals())

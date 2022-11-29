@@ -8,13 +8,12 @@ from django.db import models
 
 
 
-class Patient(AbstractBaseUser):
+class Patient(models.Model):
     """
         Models:
             Patient - this is user which want get a test result or reservation new test
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     pesel = models.CharField(max_length=11, primary_key=True)
     date_of_birth = models.DateField()
     street = models.CharField(max_length=128)
@@ -23,9 +22,7 @@ class Patient(AbstractBaseUser):
                                         null=True)
     post_code = models.CharField(max_length=6)
     city = models.CharField(max_length=128)
-    mail = models.CharField(max_length=64)
 
-    USERNAME_FIELD = 'pesel'
 
 
 TEST = (
