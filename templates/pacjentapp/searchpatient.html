@@ -1,7 +1,9 @@
 {% extends 'pacjentapp/base.html' %}
 
 {% block content %}
-    <a href="{% url 'mainview' %}">Wróć</a>
+    <a href="{% url 'dashboard' %}">Wróć</a>
+    <br>
+    {{ error }}
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}

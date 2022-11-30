@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacjent - profil</title>
+</head>
+<body>
+    <div class="up">
+        <a href="{% url 'search-patient' %}">Wróć do wyszukiwań</a>
+        <div class="data_personal">
+            <h2>{{ user.patient.pesel }}</h2>
+            {{ user.first_name }} {{ user.last_name }}
+            <h4>{{ user.patient.date_of_birth }}</h4>
+        </div>
+        <div class="address">
+            <h2>Adres zamieszkania:</h2>
+            <p>Ul. {{ user.patient.street }} {{ user.patient.build_number }} / {{ user.patient.apartment_number }}<br>
+            {{ user.patient.post_code }} {{ user.patient.city }}</p>
+        </div>
+    </div>
+</body>
+</html>

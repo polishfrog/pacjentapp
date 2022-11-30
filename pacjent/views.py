@@ -1,3 +1,4 @@
+import datetime
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -14,6 +15,10 @@ from pacjent.models import Patient
 
 
 class LoginView(View):
+    """
+    GET: when user into website
+    POST: when user text pesel and password, system checks which data is valid
+    """
     def get(self, request):
         form = LoginForm()
         return render(request, 'pacjentapp/login.html', locals())
@@ -26,22 +31,34 @@ class LoginView(View):
             user = authenticate(username=pesel, password=password)
             if user:
                 login(request, user)
+                user.last_login = datetime.datetime.now()
             else:
                 form.add_error(None, "Zły numer pesel lub hasło")
                 return render(request, 'pacjentapp/login.html', {'form': form})
-            return redirect('mainview')
-#TODO: Change link after login
+            return redirect('dashboard')
+    ##TODO: Change link after login
 
 
-class MainView(View):
+class Dashboard(View):
+    """
+    GET: this is main view for users and staff
+    """
     def get(self, request):
-        return render(request, 'pacjentapp/base_two.html')
+        return render(request, 'pacjentapp/base_two.html', locals())
 
 
 class AddNewPatient(View):
+    """
+    Function : only staff have access to the content
+    GET: when staff want add new patient
+    POST: if staff click the button and all data is correct, we will add new patient to database.
+        new_patient : create account user in User
+        profile.user : assigning the User model to the Patient model
+    """
     def get(self, request):
         form = NewUserForm()
         return render(request, 'pacjentapp/add_patient.html', locals())
+
     def post(self, request):
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -78,10 +95,7 @@ class AddNewPatient(View):
             new_patient.patient.city = city
             profile.save()
 
-
-
-
-            return redirect('mainview')
+            return redirect('dashboard')
         return render(request, 'pacjentapp/add_patient.html', locals())
 
 
@@ -89,9 +103,14 @@ class SearchPatientView(View):
     def get(self, request):
         form = SearchForm()
         return render(request, 'pacjentapp/searchpatient.html', locals())
+
     def post(self, request):
         form = SearchForm(request.POST)
         if form.is_valid():
             pesel = form.cleaned_data.get('pesel')
-            user = User.objects.get(username=pesel)
-
+            if User.objects.filter(username=pesel):
+                user = User.objects.get(username=pesel)
+                return render(request, 'pacjentapp/profilsearch.html', locals())
+            else:
+                return render(request, 'pacjentapp/searchpatient.html', {'form': SearchForm(),
+                                                                         'error': 'Nie ma takiego pacjenta!'})

@@ -1,10 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Portal pacjenta</title>
- <!--   <link type="text/css" href="{%
- static 'css/mainstyle.css' %}" rel="stylesheet"> -->
+    <link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 <body>
     <div class="left">
@@ -13,9 +13,15 @@
         {% endblock %}
     </div>
     <div class="right">
-        {{ request.user.first_name }} {{ request.user.last_name }}
+        {{ request.user.first_name }} {{ request.user.last_name }}<br>
+        Ostatnie logowanie: {{ request.user.last_login }}<br>
+        Data utworzenia konta: {{ request.user.date_joined }}<br>
         {% block right %}
-            <a href="{% url 'add-new-patient' %}">Dodaj nowego pacjenta</a>
+            {% if request.user.is_staff == True %}
+                <a href="{% url 'add-new-patient' %}">Dodaj nowego pacjenta</a><br>
+                <a href="{% url 'search-patient' %}">Wyszukaj pacjenta w bazie</a>
+            {% endif %}
+
         {% endblock %}
     </div>
 </body>

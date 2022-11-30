@@ -1,6 +1,7 @@
 {% extends 'pacjentapp/base_two.html' %}
 
 {% block left %}
+    <a href="{% url 'dashboard' %}">Wróć</a>
     <h2>Dodaj nowego pacjenta:</h2>
     <form action="" method="post">
         {% csrf_token %}

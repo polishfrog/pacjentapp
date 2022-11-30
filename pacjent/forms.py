@@ -9,6 +9,7 @@ def post_code_validation(post_code):
     if post_code[2] != '-':
         raise ValidationError("Kod pocztowy musi być w formacie 00-000")
 
+
 def pesel_validation(pesel):
     if len(pesel) != 11:
         raise ValidationError("PESEL ma 11 liczb!")
@@ -32,11 +33,10 @@ def pesel_validation(pesel):
             raise ValidationError("PESEL jest niepoprawny!")
 
 
-
-"""
-    Form : 
-        When admin or staff want add new user.    """
 class NewUserForm(forms.Form):
+    """
+    Form : When admin or staff want add new user. This form is only use for staff
+    """
     pesel = forms.CharField(max_length=11, required=True, validators=[pesel_validation])
     first_name = forms.CharField(max_length=64, required=True)
     last_name = forms.CharField(max_length=64, required=True)
@@ -51,10 +51,10 @@ class NewUserForm(forms.Form):
     mail = forms.EmailField(required=True)
 
 
-"""
-    Form :
-        When patient want change his data"""
 class ChangeUserDataForm(forms.Form):
+    """
+    Form : When patient want change his data
+    """
     street = forms.CharField(max_length=128, required=True)
     build_number = forms.CharField(max_length=8, required=True)
     apartment_number = forms.CharField(max_length=8, required=True)
