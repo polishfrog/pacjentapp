@@ -4,6 +4,10 @@ from django.forms import ModelForm
 
 
 def post_code_validation(post_code):
+    """
+    :param post_code: system check if the post code is correct
+    :return: if post code is wrong, system return information with error
+    """
     if len(post_code) == 5:
         raise ValidationError("Kod pocztowy musi być w formacie 00-000")
     if post_code[2] != '-':
@@ -11,6 +15,10 @@ def post_code_validation(post_code):
 
 
 def pesel_validation(pesel):
+    """
+    :param pesel: Polish id
+    :return: information about valid pesel
+    """
     if len(pesel) != 11:
         raise ValidationError("PESEL ma 11 liczb!")
     elif len(pesel) == 11:
@@ -35,7 +43,7 @@ def pesel_validation(pesel):
 
 class NewUserForm(forms.Form):
     """
-    Form : When admin or staff want add new user. This form is only use for staff
+    :return Form : When admin or staff want add new user. This form is only use for staff
     """
     pesel = forms.CharField(max_length=11, required=True, validators=[pesel_validation])
     first_name = forms.CharField(max_length=64, required=True)
@@ -45,15 +53,15 @@ class NewUserForm(forms.Form):
     date_of_birth = forms.DateField(required=True)
     street = forms.CharField(max_length=128, required=True)
     build_number = forms.CharField(max_length=8, required=True)
-    apartment_number = forms.CharField(max_length=8, empty_value=None)
+    apartment_number = forms.CharField(max_length=8, empty_value=None, required=False)
     post_code = forms.CharField(max_length=6, validators=[post_code_validation], required=True)
     city = forms.CharField(max_length=128, required=True)
     mail = forms.EmailField(required=True)
-
+#TODO: Zmiana hasła na autogenerowanie i pobieranie do pliku hasła.
 
 class ChangeUserDataForm(forms.Form):
     """
-    Form : When patient want change his data
+    :return Form : When patient want change his data
     """
     street = forms.CharField(max_length=128, required=True)
     build_number = forms.CharField(max_length=8, required=True)
@@ -63,9 +71,19 @@ class ChangeUserDataForm(forms.Form):
 
 
 class LoginForm(forms.Form):
+    """
+    :return Form : login form
+    """
     pesel = forms.CharField(max_length=11)
     password = forms.CharField(max_length=32, widget=forms.PasswordInput)
 
 
 class SearchForm(forms.Form):
+    """
+    :return Form : if staff want search patient and all data about him
+    """
     pesel = forms.CharField(max_length=11, required=True, validators=[pesel_validation])
+
+
+class TestResultForm(forms.Form):
+    patient = forms.CharField(max_length=11)

@@ -7,6 +7,9 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import ValidationError
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+import local_settings
 from pacjent.forms import LoginForm, NewUserForm, SearchForm
 from pacjent.models import Patient
 
@@ -39,10 +42,12 @@ class LoginView(View):
     ##TODO: Change link after login
 
 
-class Dashboard(View):
+class Dashboard(LoginRequiredMixin, View):
     """
     GET: this is main view for users and staff
     """
+    login_url = '/'
+    redirect_field_name = 'login'
     def get(self, request):
         return render(request, 'pacjentapp/base_two.html', locals())
 

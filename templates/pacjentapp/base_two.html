@@ -19,8 +19,12 @@
         {% block right %}
             {% if request.user.is_staff == True %}
                 <a href="{% url 'add-new-patient' %}">Dodaj nowego pacjenta</a><br>
-                <a href="{% url 'search-patient' %}">Wyszukaj pacjenta w bazie</a>
+                <a href="{% url 'search-patient' %}">Wyszukaj pacjenta w bazie</a><br>
+                <a href="{% url 'search-patient' %}">Dodaj wyniki badań</a><br><br>
             {% endif %}
+            <a href="{% url 'search-patient' %}">Zobacz swój profil</a><br>
+            <a href="{% url 'search-patient' %}">Zobacz swoje wyniki badań</a><br>
+            <a href="{% url 'search-patient' %}">Zarejestruj się na kolejne badania</a><br>
 
         {% endblock %}
     </div>

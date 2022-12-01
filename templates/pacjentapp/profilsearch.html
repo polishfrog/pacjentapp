@@ -14,7 +14,10 @@
         </div>
         <div class="address">
             <h2>Adres zamieszkania:</h2>
-            <p>Ul. {{ user.patient.street }} {{ user.patient.build_number }} / {{ user.patient.apartment_number }}<br>
+            <p>Ul. {{ user.patient.street }} {{ user.patient.build_number }}
+                {% if user.patient.apartment_number != None %}
+                    / {{ user.patient.apartment_number }}
+                {% endif %}<br>
             {{ user.patient.post_code }} {{ user.patient.city }}</p>
         </div>
     </div>
