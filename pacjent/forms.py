@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+import re
 from django.forms import ModelForm
 
 
@@ -48,8 +49,6 @@ class NewUserForm(forms.Form):
     pesel = forms.CharField(max_length=11, required=True, validators=[pesel_validation])
     first_name = forms.CharField(max_length=64, required=True)
     last_name = forms.CharField(max_length=64, required=True)
-    password = forms.CharField(max_length=32, widget=forms.PasswordInput, required=True)
-    password_repeat = forms.CharField(max_length=32, widget=forms.PasswordInput, required=True)
     date_of_birth = forms.DateField(required=True)
     street = forms.CharField(max_length=128, required=True)
     build_number = forms.CharField(max_length=8, required=True)

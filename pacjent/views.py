@@ -1,8 +1,8 @@
 import datetime
+import random
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required, permission_required
@@ -12,6 +12,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import local_settings
 from pacjent.forms import LoginForm, NewUserForm, SearchForm
 from pacjent.models import Patient
+
+#pdf
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -52,6 +56,24 @@ class Dashboard(LoginRequiredMixin, View):
         return render(request, 'pacjentapp/base_two.html', locals())
 
 
+def generator_passwor():
+    password = ""
+    i = 0
+    i1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    i2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w', 'z',
+          'x']
+    i3 = ['!', '@', '#', '$', '%', '&']
+    while i < 15:
+        if i == 0 or i == 3 or i == 4 or i == 7 or i == 9 or i == 10 or i == 11:
+            password += i2[random.randint(0, 22)]
+        elif i == 1 or i == 2 or i == 6 or i == 8 or i == 14:
+            password += i1[random.randint(0, 8)]
+        elif i == 5 or i == 12 or i == 13:
+            password += i3[random.randint(0, 5)]
+        i += 1
+    return password
+
+
 class AddNewPatient(View):
     """
     Function : only staff have access to the content
@@ -70,10 +92,6 @@ class AddNewPatient(View):
             pesel = form.cleaned_data.get('pesel')
             if User.objects.filter(username=pesel).exists():
                 raise ValidationError('Ten pacjent jest już w systemie!')
-            password = form.cleaned_data.get('password')
-            password_repeat = form.cleaned_data.get('password_repeat')
-            if password != password_repeat:
-                raise ValidationError('Hasła nie są takie same!')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             date_of_birth = form.cleaned_data.get('date_of_birth')
@@ -83,7 +101,7 @@ class AddNewPatient(View):
             post_code = form.cleaned_data.get('post_code')
             city = form.cleaned_data.get('city')
             mail = form.cleaned_data.get('mail')
-
+            password = generator_passwor()
             new_patient = User.objects.create_user(username=pesel,
                                                    first_name=first_name,
                                                    last_name=last_name,
@@ -100,7 +118,16 @@ class AddNewPatient(View):
             new_patient.patient.city = city
             profile.save()
 
-            return redirect('dashboard')
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'inline;'
+            pdf = canvas.Canvas(response)
+            pdf.drawString(150, 800, f'Login i haslo do zalogowania sie na platformie pacjent.pl')
+            pdf.drawString(240, 780, f'Login: {pesel}')
+            pdf.drawString(225, 760, f'Haslo: {password}')
+            pdf.drawString(130, 740, f'Nie zgub swoich danych! Pamietaj, haslo jest przypisane na stale')
+            pdf.showPage()
+            pdf.save()
+            return response
         return render(request, 'pacjentapp/add_patient.html', locals())
 
 
