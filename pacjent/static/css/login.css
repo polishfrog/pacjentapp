@@ -1,0 +1,36 @@
+body{
+    margin: 0;
+    padding 0;
+    background-color: #EEE;
+    text-align: center;
+}
+
+form{
+    position: absolute;
+    min-height: 300px;
+    width: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    border-radius: 30px;
+}
+
+form input{
+    border-radius: 15px;
+    height: 35px;
+    text-align: center;
+    border: 1px black solid;
+}
+
+input[type=submit]{
+    background-color: #009966;
+    color: white;
+    border: none;
+    height: 45px;
+    width: 150px;
+}
+
+input[type=submit]:hover{
+    background-color: #090;
+}

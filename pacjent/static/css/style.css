@@ -1,18 +1,50 @@
 body{
     margin: 0;
     padding: 0;
-    background-color: whitesmoke;
+    background-color: #EEE;
     text-align: center;
+    width: 100%;
+    margin-top: 50px;
 }
 
 .left{
-    width: 70%;
+    width: 55%;
+    min-height: 500px;
+    background-color: #FFF;
+    float: left;
+    margin: 0 100px 0 50px;
 }
 
 .right{
-    width: 30%;
+    width: 26%;
+    min-height: 300px;
+    background-color: white;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.left, .right{
-    display: block;
+.right, .left{
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.right a{
+    height: 35px;
+    padding: 10px;
+    border-radius: 15px;
+    width: 60%;
+    text-decoration: none;
+    background-color: #009966;
+    color: #FFF;
+    text-align: center;
+}
+
+.right a:hover{
+    background-color: #090;
+}
+
+a{
+    margin-top: 25px !important;
 }
