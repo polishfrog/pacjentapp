@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pacjent.views import LoginView, AddNewPatient, Dashboard, SearchPatientView, AddTestResultView
+from pacjent.views import LoginView, AddNewPatient, Dashboard, SearchPatientView, AddTestResultView, Logout, ResultTest
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +24,6 @@ urlpatterns = [
     path('add_new_patient/', AddNewPatient.as_view(), name='add-new-patient'),
     path('search_patient/', SearchPatientView.as_view(), name='search-patient'),
     path('add_test/', AddTestResultView.as_view(), name='add-test-result'),
+    path('test_info/<int:number_test>', ResultTest.as_view(), name='result-test'),
+    path('logout/', Logout.as_view(), name='logout'),
 ]

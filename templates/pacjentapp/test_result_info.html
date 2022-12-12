@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+    <a href="{% url 'dashboard' %}">Wróć</a>
+    <h2>Wynik testu</h2>
+    {% if wynik.name_test == '1' %}
+        Badania krwi
+    {% elif wynik.name_test == '2' %}
+        Badania moczu
+    {% endif %}
+    <p></p>
+</body>
+</html>

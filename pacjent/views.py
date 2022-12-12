@@ -1,7 +1,7 @@
 import datetime
 import random
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
@@ -45,7 +45,10 @@ class LoginView(View):
             return redirect('dashboard')
     ##TODO: Change link after login
 
-
+class Logout(View):
+    def get(self, request):
+        logout(request)
+        return redirect('login')
 class Dashboard(LoginRequiredMixin, View):
     """
     GET: this is main view for users and staff
@@ -198,3 +201,11 @@ class AddTestResultView(View):
             wyniki.save()
             return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm(),
                                                                 'error': 'Wyniki poprawnie dodane!'})
+
+
+class ResultTest(View):
+    def get(self, request, number_test):
+        wynik = TestResultPatient.objects.get(id=number_test)
+        if wynik.patient_id != request.user.id:
+            return redirect('dashboard')
+        return render(request, 'pacjentapp/test_result_info.html', {'wynik': wynik})

@@ -26,7 +26,7 @@
                             Badania moczu
                         {% endif %}
                            -  {{ wynik.date_test }}
-                        <a href="{% url 'dashboard' %}" style="text-decoration: none;
+                        <a href="{% url "result-test" number_test=wynik.id%}" style="text-decoration: none;
                                                                 color: white;
                                                                 background-color:#096;
                                                                 border-radius: 20px;
@@ -52,7 +52,7 @@
             <a href="{% url 'search-patient' %}">Zobacz swój profil</a><br><br>
             <a href="{% url 'search-patient' %}">Zobacz swoje wyniki badań</a><br><br>
             <a href="{% url 'search-patient' %}">Zarejestruj się na kolejne badania</a><br><br>
-            <a href="{% url 'search-patient' %}" class="logout">Wyloguj się</a><br><br>
+            <a href="{% url 'logout' %}" class="logout">Wyloguj się</a><br><br>
     </div>
 </body>
 </html>
