@@ -33,6 +33,7 @@ body{
 .right a{
     height: 35px;
     padding: 10px;
+    margin: 10px !important;
     border-radius: 15px;
     width: 60%;
     text-decoration: none;
@@ -47,6 +48,7 @@ body{
 
 a{
     text-decoration: none;
+
 }
 
 .wyniki{
