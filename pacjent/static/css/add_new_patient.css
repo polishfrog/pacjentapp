@@ -1,22 +1,19 @@
 body{
     margin: 0;
-    padding: 0;
+    padding 0;
     background-color: #EEE;
     text-align: center;
-    width: 100%;
-    margin-top: 50px;
 }
 
 form{
     position: absolute;
-    min-height: 150px;
-    width: 350px;
+    min-height: 300px;
+    width: 450px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #FFF;
     border-radius: 30px;
-    padding-top: 20px;
 }
 
 form input{
@@ -24,6 +21,7 @@ form input{
     height: 35px;
     text-align: center;
     border: 1px black solid;
+
 }
 
 input[type=submit]{
@@ -32,6 +30,7 @@ input[type=submit]{
     border: none;
     height: 45px;
     width: 150px;
+    margin-bottom: 10px;
 }
 
 input[type=submit]:hover{

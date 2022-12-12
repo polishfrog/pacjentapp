@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Pacjent - profil</title>
-    <link type="text/css" href="{% static 'css/search_patient.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/serach_patient.css' %}" rel="stylesheet"> <!-- tak wiem ma być search a nie serach xd -->
 </head>
 <body>
-    <a href="{% url 'dashboard' %}">Wróć</a>
-    <br>
-    {{ error }}
+
     <form action="" method="post">
         {% csrf_token %}
+        {{ error }}
         {{ form.as_p }}
-        <input type="submit" value="Szukaj">
+        <input type="submit" value="Szukaj"><br><br>
+        <a href="{% url 'dashboard' %}">Wróć</a>
     </form>
 </body>
 </html>

@@ -49,9 +49,8 @@
             {% endif %}
 
         {% endblock %}
-            <a href="{% url 'search-patient' %}">Zobacz swój profil</a><br><br>
-            <a href="{% url 'search-patient' %}">Zobacz swoje wyniki badań</a><br><br>
-            <a href="{% url 'search-patient' %}">Zarejestruj się na kolejne badania</a><br><br>
+            <a href="{% url 'search-patient' %}" style="background-color: gray;">Zobacz swój profil</a><br><br>
+            <a href="{% url 'search-patient' %}" style="background-color: gray;">Zarejestruj się na kolejne badania</a><br><br>
             <a href="{% url 'logout' %}" class="logout">Wyloguj się</a><br><br>
     </div>
 </body>

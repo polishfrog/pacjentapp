@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Portal pacjenta</title>
-
+    <link type="text/css" href="{% static 'css/add_new_patient.css' %}" rel="stylesheet">
 </head>
 <body>
-    <a href="{% url 'dashboard' %}">Wróć</a>
-    <h2>Dodaj nowego pacjenta:</h2>
+
     <form action="" method="post">
         {% csrf_token %}
+        <h2>Dodaj nowego pacjenta:</h2>
         {{ form.as_p }}
-        <input type="submit" value="Dodaj nowego pacjenta" formtarget="_blank">
+        <input type="submit" value="Dodaj nowego pacjenta" formtarget="_blank"><br>
+        <a href="{% url 'dashboard' %}" class="ej">Wróć</a>
     </form>
 </body>

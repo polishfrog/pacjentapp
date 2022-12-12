@@ -8,9 +8,62 @@
     <a href="{% url 'dashboard' %}">Wróć</a>
     <h2>Wynik testu</h2>
     {% if wynik.name_test == '1' %}
-        Badania krwi
+        <h3>Badania krwi - {{ wynik.date_test }}<br>
+        Pacjent: {{ request.user.patient.pesel }}<br>
+        {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <table>
+            <tr>
+                <td>Leukocyty: {{ wynik.leukocytes }} tyś/ql (G/I)<br>
+                <span style="font-size: 70%;">Norma: 4.1 - 10.9 tyś/ql (G/I)</span></td>
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+                <td>Erytrocyty(RBC): {{ wynik.erythrocytes }} mln/ql<br>
+                <span style="font-size: 70%;">Norma: 3.9-6.5 mln/ql</span></td>
+            </tr>
+            <tr>
+                <td>Hemoglobina: {{ wynik.hemoglobin }} g/dl<br>
+                <span style="font-size: 70%;">Norma: 11.5-17.5 g/dl</span></td>
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+                <td>Hematokryt: {{ wynik.hematocrit }} %<br>
+                <span style="font-size: 70%;">Norma: 37-52 %</span></td>
+            </tr>
+            <tr>
+                <td>MCV: {{ wynik.mcv }} fl<br>
+                <span style="font-size: 70%;">Norma: 80-97 fl</span></td>
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+                <td>MCH: {{ wynik.mch }} pg<br>
+                <span style="font-size: 70%;">Norma: 26-33 pg</span></td>
+            </tr>
+            <tr>
+                <td>MCHC: {{ wynik.mchc }} g/dl<br>
+                <span style="font-size: 70%;">Norma: 32-36 g/dl</span></td>
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+                <td>Trombocyty (płytki krwi, PLT): {{ wynik.thrombocytes }} tys/ql<br>
+                <span style="font-size: 70%;">Norma: 150-450 tys/ql</span></td>
+            </tr>
+            <tr>
+                <td>RDW: {{ wynik.rdw }} %<br>
+                <span style="font-size: 70%;">Norma: 11.5-14.5 %</span></td>
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+                <td>PDW: {{ wynik.pdw }} fl<br>
+                <span style="font-size: 70%;">Norma: 8-13 fl</span></td>
+            </tr>
+            <tr>
+                <td>P-LCR: {{ wynik.plcr }} %<br>
+                <span style="font-size: 70%;">Norma: 13-43 %</span></td>
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+                <td>Neutrofile (NEUT): {{ wynik.neutrophils }} %<br>
+                <span style="font-size: 70%;">Norma: 50-70 %</span></td>
+            </tr>
+
+        </table>
+
+
+
+
     {% elif wynik.name_test == '2' %}
-        Badania moczu
+        <h3>Badania moczu - {{ wynik.date_test }}<br>
+        Pacjent: {{ request.user.patient.pesel }}<br>
+        {{ request.user.first_name }} {{ request.user.last_name }}</h3>
     {% endif %}
     <p></p>
 </body>
