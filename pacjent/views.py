@@ -10,8 +10,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 import local_settings
-from pacjent.forms import LoginForm, NewUserForm, SearchForm
-from pacjent.models import Patient
+from pacjent.forms import LoginForm, NewUserForm, SearchForm, TestResultForm
+from pacjent.models import Patient, TestResultPatient
 
 #pdf
 from reportlab.pdfgen import canvas
@@ -53,6 +53,9 @@ class Dashboard(LoginRequiredMixin, View):
     login_url = '/'
     redirect_field_name = 'login'
     def get(self, request):
+        #if TestResultPatient.objects.filter(patient=request.user.patient.pesel):
+
+        wyniki = TestResultPatient.objects.filter(patient_id=request.user.id).order_by('-date_test')
         return render(request, 'pacjentapp/base_two.html', locals())
 
 
@@ -146,3 +149,52 @@ class SearchPatientView(View):
             else:
                 return render(request, 'pacjentapp/searchpatient.html', {'form': SearchForm(),
                                                                          'error': 'Nie ma takiego pacjenta!'})
+
+
+class AddTestResultView(View):
+    def get(self, request):
+        form = TestResultForm()
+        return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm()})
+
+    def post(self, request):
+        form = TestResultForm(request.POST)
+        if form.is_valid():
+            pesel = form.cleaned_data.get('pesel')
+            if not User.objects.filter(username=pesel):
+                return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm(),
+                                                                    'error': 'Taki użytkownik nie istnieje!'})
+
+            name_test = form.cleaned_data.get('test')
+            date_test = form.cleaned_data.get('data')
+            leukocytes = form.cleaned_data.get('leukocytes')
+            erythrocytes = form.cleaned_data.get('erythrocytes')
+            hemoglobin = form.cleaned_data.get('hemoglobin')
+            hematocrit = form.cleaned_data.get('hematocrit')
+            mcv = form.cleaned_data.get('mcv')
+            mch = form.cleaned_data.get('mch')
+            mchc = form.cleaned_data.get('mchc')
+            thrombocytes = form.cleaned_data.get('thrombocytes')
+            rdw = form.cleaned_data.get('rdw')
+            pdw = form.cleaned_data.get('pdw')
+            plcr = form.cleaned_data.get('plcr')
+            neutrophils = form.cleaned_data.get('neutrophils')
+
+            wyniki = TestResultPatient()
+            wyniki.patient = Patient.objects.get(pesel=pesel)
+            wyniki.name_test = name_test
+            wyniki.date_test = date_test
+            wyniki.leukocytes = leukocytes
+            wyniki.erythrocytes = erythrocytes
+            wyniki.hemoglobin = hemoglobin
+            wyniki.hematocrit = hematocrit
+            wyniki.mcv = mcv
+            wyniki.mch = mch
+            wyniki.mchc = mchc
+            wyniki.thrombocytes = thrombocytes
+            wyniki.rdw = rdw
+            wyniki.pdw = pdw
+            wyniki.plcr = plcr
+            wyniki.neutrophils = neutrophils
+            wyniki.save()
+            return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm(),
+                                                                'error': 'Wyniki poprawnie dodane!'})

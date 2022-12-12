@@ -84,5 +84,26 @@ class SearchForm(forms.Form):
     pesel = forms.CharField(max_length=11, required=True, validators=[pesel_validation])
 
 
+TEST = (
+    (1, "Badanie krwi"),
+    (2, "Badanie moczu"),
+)
+
 class TestResultForm(forms.Form):
-    patient = forms.CharField(max_length=11)
+    pesel = forms.CharField(max_length=11, required=True)
+    test = forms.ChoiceField(choices=TEST, required=True)
+    data = forms.DateField(required=True)
+    leukocytes = forms.FloatField(required=False)
+    erythrocytes = forms.FloatField(required=False)
+    hemoglobin = forms.FloatField(required=False)
+    hematocrit = forms.IntegerField(required=False)
+    mcv = forms.IntegerField(required=False)
+    mch = forms.IntegerField(required=False)
+    mchc = forms.IntegerField(required=False)
+    thrombocytes = forms.IntegerField(required=False)
+    rdw = forms.FloatField(required=False)
+    pdw = forms.IntegerField(required=False)
+    plcr = forms.IntegerField(required=False)
+    neutrophils = forms.IntegerField(required=False)
+
+

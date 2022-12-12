@@ -36,7 +36,7 @@ body{
     border-radius: 15px;
     width: 60%;
     text-decoration: none;
-    background-color: #009966;
+    background-color: #096;
     color: #FFF;
     text-align: center;
 }
@@ -46,5 +46,14 @@ body{
 }
 
 a{
-    margin-top: 25px !important;
+    text-decoration: none;
+}
+
+.wyniki{
+    margin: 10px;
+    width: 100%;
+    border: 1px solid black;
+    padding: 20px;
+    text-decoration: none;
+    border-radius: 25px;
 }

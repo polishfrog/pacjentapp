@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portal pacjenta</title>
+</head>
+<body>
+
+    <form action="" method="post">
+     <a href="{% url 'dashboard' %}">Wróć</a>
+        {% csrf_token %}
+        <h2>Dodaj wyniki badań</h2><br>
+        {{ error }}
+        {{ form.as_p }}<br>
+        <input type="submit" value="Dodaj">
+    </form>
+</body>
+</html>

@@ -8,7 +8,34 @@
 </head>
 <body>
     <div class="left">
-        <h2>Wyniki badań</h2>
+        <div class="left_one">
+            <h2>Wyniki badań</h2>
+            <ul style="list-style-type: none;
+                        margin: 0;
+                        padding: 0;">
+                {% for wynik in wyniki %}
+                    <li style="margin: 10px;
+                                width: 93%;
+                                border: 1px solid black;
+                                padding: 20px;
+                                text-decoration: none;
+                                border-radius: 25px;">
+                        {% if wynik.name_test == '1' %}
+                            Badania krwi
+                        {% elif wynik.name_test == '2' %}
+                            Badania moczu
+                        {% endif %}
+                           -  {{ wynik.date_test }}
+                        <a href="{% url 'dashboard' %}" style="text-decoration: none;
+                                                                color: white;
+                                                                background-color:#096;
+                                                                border-radius: 20px;
+                                                                padding: 10px;
+                                                                margin-left: 130px;">Zobacz szczegóły</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
     <div class="right">
         <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2><br>
@@ -18,13 +45,14 @@
             {% if request.user.is_staff == True %}
                 <a href="{% url 'add-new-patient' %}">Dodaj nowego pacjenta</a><br><br>
                 <a href="{% url 'search-patient' %}">Wyszukaj pacjenta w bazie</a><br><br>
-                <a href="{% url 'search-patient' %}">Dodaj wyniki badań</a><br><br><br>
+                <a href="{% url 'add-test-result' %}">Dodaj wyniki badań</a><br><br><br>
             {% endif %}
 
         {% endblock %}
             <a href="{% url 'search-patient' %}">Zobacz swój profil</a><br><br>
             <a href="{% url 'search-patient' %}">Zobacz swoje wyniki badań</a><br><br>
             <a href="{% url 'search-patient' %}">Zarejestruj się na kolejne badania</a><br><br>
+            <a href="{% url 'search-patient' %}" class="logout">Wyloguj się</a><br><br>
     </div>
 </body>
 </html>

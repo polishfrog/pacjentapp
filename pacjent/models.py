@@ -61,40 +61,45 @@ class Place(models.Model):
     post_code = models.CharField(max_length=6)
     city = models.CharField(max_length=128)
 
-"""
-    Models:
-        Special - all doctor have any special skill
-"""
+
 class Special(models.Model):
+    """
+        Models:
+            Special - all doctor have any special skill
+    """
     name = models.CharField(max_length=128)
 
-"""
-    Models:
-        Doctor - all doctors which we have in company 
-"""
+
 class Doctor(models.Model):
+    """
+        Models:
+            Doctor - all doctors which we have in company
+    """
     id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     special = models.OneToOneField(Special, on_delete=models.CASCADE)
 
-"""
+
+class DoctorInPlace(models.Model):
+    """
     Models:
         DoctorInPlace:
             doctor : it is a Doctor model
             place : it is a Place model
             date_of_employment : date
-"""
-class DoctorInPlace(models.Model):
+    """
+
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     date_of_employment = models.DateField(default=datetime.date)
 
-"""
-    Models:
-        ReservationPatient - this is day when patient reservated new test
-"""
+
 class ReservationPatient(models.Model):
+    """
+        Models:
+            ReservationPatient - this is day when patient reservated new test
+    """
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date = models.DateField()
