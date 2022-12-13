@@ -13,50 +13,121 @@
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
         <table>
             <tr>
-                <td>Leukocyty: {{ wynik.leukocytes }} tyś/ql (G/I)<br>
+                <td>Leukocyty:
+                {% if wynik.leukocytes > 10.9 or wynik.leukocytes < 4.1 %}
+                    <span style="color: red;">{{ wynik.leukocytes }} tyś/ql (G/I)</span><br>
+                {% else %}
+                    {{ wynik.leukocytes }} tyś/ql (G/I)<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 4.1 - 10.9 tyś/ql (G/I)</span></td>
+
                 <td style="text-align: center; padding: 0 30px;">----------</td>
-                <td>Erytrocyty(RBC): {{ wynik.erythrocytes }} mln/ql<br>
+
+                <td>Erytrocyty(RBC):
+                {% if wynik.erythrocytes > 6.5 or wynik.erythrocytes < 3.9 %}
+                    <span style="color: red;">{{ wynik.erythrocytes }} mln/ql</span><br>
+                {% else %}
+                    {{ wynik.erythrocytes }} mln/ql<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 3.9-6.5 mln/ql</span></td>
             </tr>
             <tr>
-                <td>Hemoglobina: {{ wynik.hemoglobin }} g/dl<br>
+                <td>Hemoglobina:
+                {% if wynik.hemoglobin > 17.5 or wynik.hemoglobin < 11.5 %}
+                    <span style="color: red;">{{ wynik.hemoglobin }} g/dl</span><br>
+                {% else %}
+                    {{ wynik.hemoglobin }} g/dl<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 11.5-17.5 g/dl</span></td>
+
                 <td style="text-align: center; padding: 0 30px;">----------</td>
-                <td>Hematokryt: {{ wynik.hematocrit }} %<br>
+
+                <td>Hematokryt:
+                {% if wynik.hematocrit > 52 or wynik.hematocrit < 37 %}
+                    <span style="color: red;">{{ wynik.hematocrit }} %</span><br>
+                {% else %}
+                    {{ wynik.hematocrit }} %<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 37-52 %</span></td>
             </tr>
             <tr>
-                <td>MCV: {{ wynik.mcv }} fl<br>
+                <td>MCV:
+                {% if wynik.mcv > 97 or wynik.mcv < 80 %}
+                    <span style="color: red;">{{ wynik.mcv }} fl</span><br>
+                {% else %}
+                    {{ wynik.mcv }} fl<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 80-97 fl</span></td>
+
                 <td style="text-align: center; padding: 0 30px;">----------</td>
-                <td>MCH: {{ wynik.mch }} pg<br>
+
+                <td>MCH:
+                {% if wynik.mch > 33 or wynik.mch < 26 %}
+                    <span style="color: red;">{{ wynik.mch }} pg</span><br>
+                {% else %}
+                    {{ wynik.mch }} pg<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 26-33 pg</span></td>
             </tr>
             <tr>
-                <td>MCHC: {{ wynik.mchc }} g/dl<br>
+                <td>MCHC:
+                {% if wynik.mchc > 36 or wynik.mchc < 32 %}
+                    <span style="color: red;">{{ wynik.mchc }} g/dl</span><br>
+                {% else %}
+                    {{ wynik.mchc }} g/dl<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 32-36 g/dl</span></td>
+
                 <td style="text-align: center; padding: 0 30px;">----------</td>
-                <td>Trombocyty (płytki krwi, PLT): {{ wynik.thrombocytes }} tys/ql<br>
+
+                <td>Trombocyty (płytki krwi, PLT):
+                {% if wynik.thrombocytes > 450 or wynik.thrombocytes < 150 %}
+                    <span style="color: red;">{{ wynik.thrombocytes }} tys/ql</span><br>
+                {% else %}
+                    {{ wynik.thrombocytes }} tys/ql<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 150-450 tys/ql</span></td>
             </tr>
             <tr>
-                <td>RDW: {{ wynik.rdw }} %<br>
+                <td>RDW:
+                {% if wynik.rdw > 14.5 or wynik.rdw < 11.5 %}
+                    <span style="color: red;">{{ wynik.rdw }} %</span><br>
+                {% else %}
+                    {{ wynik.rdw }} %<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 11.5-14.5 %</span></td>
+
                 <td style="text-align: center; padding: 0 30px;">----------</td>
-                <td>PDW: {{ wynik.pdw }} fl<br>
+
+                <td>PDW:
+                {% if wynik.pdw > 13 or wynik.pdw < 8 %}
+                    <span style="color: red;">{{ wynik.pdw }} fl</span><br>
+                {% else %}
+                    {{ wynik.pdw }} fl<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 8-13 fl</span></td>
             </tr>
             <tr>
-                <td>P-LCR: {{ wynik.plcr }} %<br>
+                <td>P-LCR:
+                {% if wynik.plcr  > 43 or wynik.plcr < 13 %}
+                    <span style="color: red;">{{ wynik.plcr }} %</span><br>
+                {% else %}
+                    {{ wynik.plcr }} %<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 13-43 %</span></td>
+
                 <td style="text-align: center; padding: 0 30px;">----------</td>
-                <td>Neutrofile (NEUT): {{ wynik.neutrophils }} %<br>
+
+                <td>Neutrofile (NEUT):
+                {% if wynik.neutrophils  > 70 or wynik.neutrophils < 50 %}
+                    <span style="color: red;">{{ wynik.neutrophils }} %</span><br>
+                {% else %}
+                    {{ wynik.neutrophils }} %<br>
+                {% endif %}
                 <span style="font-size: 70%;">Norma: 50-70 %</span></td>
             </tr>
 
         </table>
-
 
 
 

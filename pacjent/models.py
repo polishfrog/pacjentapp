@@ -5,7 +5,32 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+def pesel_validation(pesel):
+    """
+    :param pesel: Polish id
+    :return: information about valid pesel
+    """
+    if len(pesel) != 11:
+        return 1
+    elif len(pesel) == 11:
+        tab = (1, 3, 7, 9, 1, 3, 7, 9, 1, 3)
+        suma = 0
+        j = 0
+        pesel = list(pesel)
+        pesel_list = []
+        while j < 11:
+            pesel_list.append(int(pesel[j]))
+            j += 1
+        control_number = (pesel_list[-1])
+        i = 0
+        while i < len(tab):
+            suma += int(pesel_list[i]) * tab[i]
+            i += 1
 
+        suma = suma % 10
+        if (10 - suma) % 10 != control_number:
+            return 1
+    return 0
 
 class Patient(models.Model):
     """
