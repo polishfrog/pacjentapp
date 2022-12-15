@@ -1,48 +1,97 @@
-from django.test import TestCase, Client
+from django.test import SimpleTestCase, TestCase, Client
 import pytest
 from django.contrib.auth import get_user
-from django.urls import reverse
+from django.urls import reverse, resolve
 from django.contrib.auth.models import User
-from pacjent.models import Patient, pesel_validation
+from pacjent.models import Patient, TestResultPatient, Place, Special, Doctor, DoctorInPlace, ReservationPatient, pesel_validation
+import json
+from pacjent.views import SearchPatientView, Dashboard, AddNewPatient, LoginView, AddTestResultView, Logout, ResultTest
 
 # Create your tests here.
 
 
 
 
-class TestView(TestCase):
+class TestUrl(SimpleTestCase):
+    """
+        return : information about urls
+    """
     def test_search_patient(self):
-        response = self.client.get(reverse('search-patient'))
-        assert response.status_code == 200
-        print("\nView Search-Patient is working")
+        url = reverse('search-patient')
+        self.assertEquals(resolve(url).func.view_class, SearchPatientView)
 
     def test_dashboard(self):
-        response = self.client.get(reverse('dashboard'))
-        assert response.status_code == 302
-        print("\nView Dashboard is working for only logged users")
+        url = reverse('dashboard')
+        self.assertEquals(resolve(url).func.view_class, Dashboard)
 
     def test_add_new_patient(self):
-        response = self.client.get(reverse('add-new-patient'))
-        assert response.status_code == 200
-        print("\nView Add-New-Patient is working")
+        url = reverse('add-new-patient')
+        self.assertEquals(resolve(url).func.view_class, AddNewPatient)
 
-    def test_login(self):
-        response = self.client.get(reverse('login'))
-        assert response.status_code == 200
-        print("\nView Login is working")
+    def test_login_two(self):
+        url = reverse('login')
+        self.assertEquals(resolve(url).func.view_class, LoginView)
 
     def test_add_test_result(self):
-        response = self.client.get(reverse('add-test-result'))
-        assert response.status_code == 200
-        print(f"\nView Add-Test-Result is working")
+        url = reverse('add-test-result')
+        self.assertEquals(resolve(url).func.view_class, AddTestResultView)
 
     def test_logout(self):
-        response = self.client.get(reverse('logout'))
-        assert response.status_code == 302
-        print("\nView Logout is working for only logged users")
+        url = reverse('logout')
+        self.assertEquals(resolve(url).func.view_class, Logout)
+
+    #def test_result_test(self):
+    #    url = reverse('result-test', args=['8'])
+    #    self.asserEquals(resolve(url).func.view_class, ResultTest)
 
 
-class TestSearchPatient(TestCase):
+class TestViews(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.login_url = reverse('login')
+        self.dashborad_url = reverse('dashboard')
+        self.add_new_patient_url = reverse('add-new-patient')
+        self.search_patient_url = reverse('search-patient')
+        self.add_test_result_url = reverse('add-test-result')
+        self.logout_url = reverse('logout')
+        self.result_test_url = reverse('result-test', args=[1])
+
+        #TestResultPatient.objects.create(
+        #    patient = '01212302357',
+        #    name_test = 1,
+        #    date_test = '2022-12-15',
+        #)
+
+    def test_project_login_GET(self):
+        response = self.client.get(self.login_url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_project_dashboard_GET(self):
+        response = self.client.get(self.dashborad_url)
+        self.assertEquals(response.status_code, 302)
+
+    def test_project_add_new_patient_GET(self):
+        response = self.client.get(self.add_new_patient_url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_project_search_patient_url_GET(self):
+        response = self.client.get(self.search_patient_url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_project_add_test_result_url_GET(self):
+        response = self.client.get(self.add_test_result_url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_project_logout_url_GET(self):
+        response = self.client.get(self.logout_url)
+        self.assertEquals(response.status_code, 302)
+
+    #def test_project_result_test_url_GET(self):
+    #    response = self.client.get(self.result_test_url)
+    #    self.assertEquals(response.status_code, 200)
+
+"""class TestSearchPatient(TestCase):
 
     def test_search_one(self):
         url = reverse('search-patient')
@@ -97,3 +146,4 @@ def test_pesel(pesel, result):
     assert pesel_validation(pesel) == result
     print("Wynik musi być(0-dobrze, 1-źle)")
     print(f"{pesel} - {result}")
+"""
