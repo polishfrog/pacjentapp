@@ -202,10 +202,13 @@ class AddTestResultView(View):
             return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm(),
                                                                 'error': 'Wyniki poprawnie dodane!'})
 
+        return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm(),
+                                                        'error': 'Błąd!'})
+
 
 class ResultTest(View):
     def get(self, request, number_test):
         wynik = TestResultPatient.objects.get(id=number_test)
-        #if wynik.patient_id != request.user.id:
-        #    return redirect('dashboard')
+        if wynik.patient_id != request.user.id:
+            return redirect('dashboard')
         return render(request, 'pacjentapp/test_result_info.html', {'wynik': wynik})

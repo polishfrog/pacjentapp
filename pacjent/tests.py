@@ -46,6 +46,9 @@ class TestUrl(SimpleTestCase):
 
 
 class TestViews(TestCase):
+    """
+        Test views with GET and POST method
+    """
 
     def setUp(self):
         self.client = Client()
@@ -57,15 +60,12 @@ class TestViews(TestCase):
         self.logout_url = reverse('logout')
         self.result_test_url = reverse('result-test', args=[1])
 
-        #TestResultPatient.objects.create(
-        #    patient = '01212302357',
-        #    name_test = 1,
-        #    date_test = '2022-12-15',
-        #)
+
 
     def test_project_login_GET(self):
         response = self.client.get(self.login_url)
         self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context, "lol")
 
     def test_project_dashboard_GET(self):
         response = self.client.get(self.dashborad_url)
@@ -91,7 +91,113 @@ class TestViews(TestCase):
     #    response = self.client.get(self.result_test_url)
     #    self.assertEquals(response.status_code, 200)
 
-"""class TestSearchPatient(TestCase):
+
+    def test_project_add_test_result_url_POST(self):
+        response = self.client.post(self.add_test_result_url, {
+            'patient': '01212302357',
+            'name_test': 1,
+            'date_test': '2022-12-15',
+        })
+
+        self.assertEquals(response.status_code, 200)
+
+    def test_project_search_patient_url_POST(self):
+        response = self.client.post(self.search_patient_url, {
+            'pesel': '01212302357'
+        })
+        self.assertEquals(response.status_code, 200)
+
+    def test_project_add_new_patient_url_POST_one(self):
+        response = self.client.post(self.add_new_patient_url, {
+            'first_name': 'Dawid',
+            'last_name': 'Różewski',
+            'date_of_birth': '2002-01-23',
+            'street': 'Paprotki',
+            'build_number': '2b',
+            'apartment_number': '',
+            'post_code': '44-190',
+            'city': 'Knurów',
+            'mail': 'kapiszony_online@gamil.com',
+        })
+        self.assertEquals(response.status_code, 200)
+
+
+class TestModels(TestCase):
+    def setUp(self):
+        self.place = Place.objects.create(
+            id=1,
+            name='kominiarza',
+            street='Strzelców Opolskich',
+            build_number='15b',
+            apartment_number='234',
+            post_code='44-194',
+            city='Knurów'
+        )
+
+        self.special = Special.objects.create(
+            name='Chirurg'
+        )
+
+        self.doctor = Doctor.objects.create(
+            id=1,
+            first_name='Mariusz',
+            last_name='Pudzianowski',
+            special=self.special
+        )
+
+        self.doctor_in_place = DoctorInPlace.objects.create(
+            doctor=self.doctor,
+            place=self.place,
+            date_of_employment='2021-07-01',
+        )
+
+        self.new_patient = User.objects.create(
+            username='0121230257',
+            first_name='Dawid',
+            last_name='Różewski',
+            password='12345',
+            email='pomidory.dot@interia.eu'
+        )
+
+        self.patient = Patient.objects.create(
+            user=self.new_patient,
+            pesel=self.new_patient.username,
+            date_of_birth='2001-01-23',
+            street='Pudziana',
+            build_number='28F',
+            apartment_number='7',
+            post_code='44-230',
+            city='Czerwionka',
+        )
+
+
+    def test_project_is_assigned_place_on_creation(self):
+        self.assertEquals(self.place.name, 'kominiarza')
+        self.assertEquals(self.place.id, 1)
+        self.assertEquals(self.place.street, 'Strzelców Opolskich')
+        self.assertEquals(self.place.build_number, '15b')
+        self.assertEquals(self.place.apartment_number, '234')
+        self.assertEquals(self.place.post_code, '44-194')
+        self.assertEquals(self.place.city, 'Knurów')
+
+    def test_project_is_assigned_special_on_creation(self):
+        self.assertEquals(self.special.name, 'Chirurg')
+
+    def test_project_is_assigned_doctor_on_creation(self):
+        self.assertEquals(self.doctor.special, self.special)
+        self.assertEquals(self.doctor.first_name, 'Mariusz')
+
+    def test_project_is_assigned_doctor_in_place_on_creation(self):
+        self.assertEquals(self.doctor_in_place.doctor, self.doctor)
+        self.assertEquals(self.doctor_in_place.place, self.place)
+
+    def test_project_is_assigned_patient_on_creation(self):
+        self.assertEquals(self.patient.pesel, self.new_patient.username)
+        self.assertEquals(self.new_patient.first_name, 'Dawid')
+        self.assertEquals(self.patient.date_of_birth, '2001-01-23')
+
+
+class TestSearchPatient(TestCase):
 
     def test_search_one(self):
         url = reverse('search-patient')
@@ -104,7 +210,6 @@ class TestViews(TestCase):
         response = self.client.post(url, {'pesel': '52032243795'})
         print("\nView Search-patient is working for 52032243795")
         assert response.status_code == 200
-
 
 
 class TestAddResultTest(TestCase):
@@ -146,4 +251,3 @@ def test_pesel(pesel, result):
     assert pesel_validation(pesel) == result
     print("Wynik musi być(0-dobrze, 1-źle)")
     print(f"{pesel} - {result}")
-"""

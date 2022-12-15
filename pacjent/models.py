@@ -87,6 +87,7 @@ class Place(models.Model):
     city = models.CharField(max_length=128)
 
 
+
 class Special(models.Model):
     """
         Models:
