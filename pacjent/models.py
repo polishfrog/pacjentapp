@@ -46,7 +46,7 @@ class Patient(models.Model):
                                         null=True)
     post_code = models.CharField(max_length=6)
     city = models.CharField(max_length=128)
-#TODO: Ty jedna ... czemu nie działasz... trzeba tu wrócić
+
 
 
 TEST = (

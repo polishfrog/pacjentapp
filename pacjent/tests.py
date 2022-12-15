@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from pacjent.models import Patient, TestResultPatient, Place, Special, Doctor, DoctorInPlace, ReservationPatient, pesel_validation
 import json
 from pacjent.views import SearchPatientView, Dashboard, AddNewPatient, LoginView, AddTestResultView, Logout, ResultTest
-
+from pacjent.forms import NewUserForm, ChangeUserDataForm, LoginForm, SearchForm, TestResultForm
 # Create your tests here.
 
 
@@ -28,7 +28,7 @@ class TestUrl(SimpleTestCase):
         url = reverse('add-new-patient')
         self.assertEquals(resolve(url).func.view_class, AddNewPatient)
 
-    def test_login_two(self):
+    def test_login(self):
         url = reverse('login')
         self.assertEquals(resolve(url).func.view_class, LoginView)
 
@@ -65,7 +65,6 @@ class TestViews(TestCase):
     def test_project_login_GET(self):
         response = self.client.get(self.login_url)
         self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.context, "lol")
 
     def test_project_dashboard_GET(self):
         response = self.client.get(self.dashborad_url)
@@ -170,6 +169,12 @@ class TestModels(TestCase):
             city='Czerwionka',
         )
 
+        self.test_result_patient = TestResultPatient.objects.create(
+            patient=self.patient,
+            name_test='Badanie krwi',
+            date_test='2022-12-15',
+        )
+
 
     def test_project_is_assigned_place_on_creation(self):
         self.assertEquals(self.place.name, 'kominiarza')
@@ -196,6 +201,83 @@ class TestModels(TestCase):
         self.assertEquals(self.new_patient.first_name, 'Dawid')
         self.assertEquals(self.patient.date_of_birth, '2001-01-23')
 
+    def test_project_is_assigned_test_result_patient_on_creation(self):
+        self.assertEquals(self.test_result_patient.name_test, 'Badanie krwi')
+
+
+class TestForms(SimpleTestCase):
+
+    def test_LoginFormfrom_valid_data(self):
+        form = LoginForm(data={
+            'pesel': '01212302357',
+            'password': '12345'
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_LoginForm_from_no_data(self):
+        form = LoginForm(data={})
+        self.assertFalse(form.is_valid())
+
+    def test_SearchForm_form_valid_data(self):
+        form = SearchForm(data={
+            'pesel': '01212302357'
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_SearchForm_form_no_data(self):
+        form = SearchForm(data={})
+        self.assertFalse(form.is_valid())
+
+    def test_SearchForm_form_bad_data(self):
+        form = SearchForm(data={
+            'pesel': '02332'
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_TestResultForm_form_valid_data(self):
+        form = TestResultForm(data={
+            'pesel': '01212302357',
+            'test': 1,
+            'data': '2022-12-15'
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_TestResultForm_form_no_data(self):
+        form = TestResultForm(data={})
+        self.assertFalse(form.is_valid())
+
+    def test_ChangeUserDataForm_form_valid_data(self):
+        form = ChangeUserDataForm(data={
+            'street': 'Kapelanska',
+            'build_number': '254b',
+            'apartment_number': '2',
+            'post_code': '44-194',
+            'city': 'Knurów'
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_ChangeUserDataForm_form_no_data(self):
+        form = ChangeUserDataForm(data={})
+        self.assertFalse(form.is_valid())
+
+    def test_NewUserForm_form_valid_data(self):
+        form = ChangeUserDataForm(data={
+            'pesel': '01212302357',
+            'first_name': 'Mariusz',
+            'last_name': 'Frankowski',
+            'date_of_birth': '2022-12-15',
+            'street': 'Kościuszki',
+            'build_number': '231',
+            'apartment_number': '2',
+            'post_code': '44-194',
+            'city': 'Gliwice',
+            'mail': 'dajprzyklad_@wp.pl'
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_NewUserForm_form_no_data(self):
+        form = ChangeUserDataForm(data={})
+        self.assertFalse(form.is_valid())
 
 class TestSearchPatient(TestCase):
 
