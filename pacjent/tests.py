@@ -44,7 +44,6 @@ class TestUrl(SimpleTestCase):
     #    url = reverse('result-test', args=['8'])
     #    self.asserEquals(resolve(url).func.view_class, ResultTest)
 
-
 class TestViews(TestCase):
     """
         Test views with GET and POST method
@@ -119,7 +118,6 @@ class TestViews(TestCase):
             'mail': 'kapiszony_online@gamil.com',
         })
         self.assertEquals(response.status_code, 200)
-
 
 class TestModels(TestCase):
     def setUp(self):
@@ -203,7 +201,6 @@ class TestModels(TestCase):
 
     def test_project_is_assigned_test_result_patient_on_creation(self):
         self.assertEquals(self.test_result_patient.name_test, 'Badanie krwi')
-
 
 class TestForms(SimpleTestCase):
 
@@ -292,7 +289,6 @@ class TestSearchPatient(TestCase):
         response = self.client.post(url, {'pesel': '52032243795'})
         print("\nView Search-patient is working for 52032243795")
         assert response.status_code == 200
-
 
 class TestAddResultTest(TestCase):
 
