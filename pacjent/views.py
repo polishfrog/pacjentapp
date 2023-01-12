@@ -80,6 +80,7 @@ def generator_passwor():
     return password
 
 
+
 class AddNewPatient(View):
     """
     Function : only staff have access to the content
