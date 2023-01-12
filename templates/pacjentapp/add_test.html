@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Portal pacjenta</title>
+    <meta charset="UTF-8">
+    <title>Portal pacjenta</title>
+
 </head>
 <body>
 
@@ -14,5 +16,7 @@
         {{ form.as_p }}<br>
         <input type="submit" value="Dodaj">
     </form>
+
+    <script src="{% static 'js/resulttest.js' %}"></script>
 </body>
 </html>

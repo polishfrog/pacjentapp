@@ -63,6 +63,7 @@ class Dashboard(LoginRequiredMixin, View):
 
 
 def generator_passwor():
+    """Generated password for patient"""
     password = ""
     i = 0
     i1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -78,7 +79,6 @@ def generator_passwor():
             password += i3[random.randint(0, 5)]
         i += 1
     return password
-
 
 
 class AddNewPatient(View):
