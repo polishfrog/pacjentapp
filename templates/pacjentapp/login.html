@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Poradnia - Login</title>
@@ -13,7 +13,12 @@
             {% csrf_token %}
             {{ form.errors }}
             {{ form.as_p }}<br>
-            <input type="submit" value="Zaloguj się">
+            <button type="submit" class="login" value="Zaloguj się">
+                <span class="circle" aria-hidden="true">
+                    <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Zaloguj się</span>
+            </button>
         </form>
     </div>
 </body>

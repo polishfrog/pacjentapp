@@ -137,6 +137,9 @@ class AddNewPatient(View):
             return response
         return render(request, 'pacjentapp/add_patient.html', locals())
 
+    def path(self):
+        pass
+
 
 class SearchPatientView(View):
     def get(self, request):

@@ -1,5 +1,3 @@
-
-
 let info = document.querySelector('#id_test')
 let leu = document.querySelector('#id_leukocytes')
 let erythrocytes = document.querySelector('#id_erythrocytes')
