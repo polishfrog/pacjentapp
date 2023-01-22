@@ -54,6 +54,7 @@ TEST = (
     (2, "Badanie moczu"),
 )
 
+
 class TestResultPatient(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     name_test = models.CharField(max_length=128, choices=TEST)

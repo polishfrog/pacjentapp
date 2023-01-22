@@ -89,6 +89,7 @@ TEST = (
     (2, "Badanie moczu"),
 )
 
+
 class TestResultForm(forms.Form):
     pesel = forms.CharField(max_length=11, required=True)
     test = forms.ChoiceField(choices=TEST, required=True)
@@ -105,5 +106,23 @@ class TestResultForm(forms.Form):
     pdw = forms.IntegerField(required=False)
     plcr = forms.IntegerField(required=False)
     neutrophils = forms.IntegerField(required=False)
+
+
+SEARCH_OPTION = (
+    ("date_test", "Data rosnąco"),
+    ("date_test_reverse", "Data malejąco"),
+    ("name_test", "Nazwa badania rosnąco"),
+    ("name_test_reverse", "Nazwa badania malejąco"),
+)
+
+CHECK_OPTION = (
+    (1, "Badanie krwi"),
+    (2, "Badanie moczu"),
+)
+
+
+class SortDataDashboardForm(forms.Form):
+    test_check = forms.MultipleChoiceField(choices=CHECK_OPTION, label="Rodzaj badania", widget=forms.CheckboxSelectMultiple)
+    search_option = forms.ChoiceField(choices=SEARCH_OPTION, label="Filtruj")
 
 

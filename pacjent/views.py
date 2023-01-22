@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 import local_settings
-from pacjent.forms import LoginForm, NewUserForm, SearchForm, TestResultForm
+from pacjent.forms import LoginForm, NewUserForm, SearchForm, TestResultForm, SortDataDashboardForm
 from pacjent.models import Patient, TestResultPatient
 
 #pdf
@@ -56,10 +56,26 @@ class Dashboard(LoginRequiredMixin, View):
     """
     login_url = '/'
     redirect_field_name = 'login'
+
     def get(self, request):
         #if TestResultPatient.objects.filter(patient=request.user.patient.pesel):
+        search_type = 'date_test'
+        test_check = [1, 2]
 
-        wyniki = TestResultPatient.objects.filter(patient_id=request.user.id).order_by('-date_test')
+        formers = SortDataDashboardForm(request.GET)
+
+        if formers.is_valid():
+            search_type = formers.cleaned_data.get('search_option')
+            test_check = formers.cleaned_data.get('test_check')
+
+        if search_type == "date_test" or search_type == "name_test":
+            search_all = "-" + "".join(search_type)
+            wyniki = TestResultPatient.objects.filter(patient_id=request.user.id, name_test__in=test_check).order_by(search_all, "-date_test")
+        else:
+            search_all = "-" + search_type[0:9]
+            wyniki = TestResultPatient.objects.filter(patient_id=request.user.id, name_test__in=test_check).order_by(search_all, "date_test").reverse()
+
+        formers = SortDataDashboardForm(initial={"search_option": search_type, "test_check": test_check})
         return render(request, 'pacjentapp/base_two.html', locals())
 
 
