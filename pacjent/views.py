@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
-from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import ValidationError
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -43,12 +42,14 @@ class LoginView(View):
                 form.add_error(None, "Zły numer pesel lub hasło")
                 return render(request, 'pacjentapp/login.html', {'form': form})
             return redirect('dashboard')
-    ##TODO: Change link after login
+
 
 class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('login')
+
+
 class Dashboard(LoginRequiredMixin, View):
     """
     GET: this is main view for users and staff
@@ -64,20 +65,14 @@ class Dashboard(LoginRequiredMixin, View):
 
 def generator_passwor():
     """Generated password for patient"""
-    password = ""
-    i = 0
-    i1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-    i2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w', 'z',
-          'x']
-    i3 = ['!', '@', '#', '$', '%', '&']
-    while i < 15:
-        if i == 0 or i == 3 or i == 4 or i == 7 or i == 9 or i == 10 or i == 11:
-            password += i2[random.randint(0, 22)]
-        elif i == 1 or i == 2 or i == 6 or i == 8 or i == 14:
-            password += i1[random.randint(0, 8)]
-        elif i == 5 or i == 12 or i == 13:
-            password += i3[random.randint(0, 5)]
-        i += 1
+    small_letter = "abcdefghijklmnoprstuwvxyz"
+    big_latter = "ABCDEFGHIJKLMNOPRSTUWVXYZ"
+    number = "0123456789"
+    special_char = "!@#$"
+
+    alls = small_letter + big_latter + number + special_char
+    length = 16
+    password = "".join(random.sample(alls, length))
     return password
 
 
@@ -125,6 +120,8 @@ class AddNewPatient(View):
             new_patient.patient.city = city
             profile.save()
 
+
+            """Generate pdf file for patient"""
             response = HttpResponse(content_type='application/pdf')
             response['Content-Disposition'] = 'inline;'
             pdf = canvas.Canvas(response)
