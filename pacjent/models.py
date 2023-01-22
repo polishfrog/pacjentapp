@@ -52,6 +52,10 @@ class Patient(models.Model):
 TEST = (
     (1, "Badanie krwi"),
     (2, "Badanie moczu"),
+    (3, "Morfologia"),
+    (4, "Glukoza"),
+    (5, "Próby wątrobowe"),
+    (5, "Badanie kreatyny"),
 )
 
 

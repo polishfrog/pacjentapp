@@ -87,6 +87,10 @@ class SearchForm(forms.Form):
 TEST = (
     (1, "Badanie krwi"),
     (2, "Badanie moczu"),
+    (3, "Morfologia"),
+    (4, "Glukoza"),
+    (5, "Próby wątrobowe"),
+    (5, "Badanie kreatyny"),
 )
 
 
@@ -115,14 +119,9 @@ SEARCH_OPTION = (
     ("name_test_reverse", "Nazwa badania malejąco"),
 )
 
-CHECK_OPTION = (
-    (1, "Badanie krwi"),
-    (2, "Badanie moczu"),
-)
-
 
 class SortDataDashboardForm(forms.Form):
-    test_check = forms.MultipleChoiceField(choices=CHECK_OPTION, label="Rodzaj badania", widget=forms.CheckboxSelectMultiple)
+    test_check = forms.MultipleChoiceField(choices=TEST, label="Rodzaj badania", widget=forms.CheckboxSelectMultiple)
     search_option = forms.ChoiceField(choices=SEARCH_OPTION, label="Filtruj")
 
 

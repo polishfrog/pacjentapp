@@ -135,7 +135,29 @@
         <h3>Badania moczu - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+
+    {% elif wynik.name_test == '3' %}
+        <h3>Morfologia - {{ wynik.date_test }}<br>
+        Pacjent: {{ request.user.patient.pesel }}<br>
+        {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+
+    {% elif wynik.name_test == '4' %}
+        <h3>Glukoza - {{ wynik.date_test }}<br>
+        Pacjent: {{ request.user.patient.pesel }}<br>
+        {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+
+    {% elif wynik.name_test == '5' %}
+        <h3>Próby wątrobowe - {{ wynik.date_test }}<br>
+        Pacjent: {{ request.user.patient.pesel }}<br>
+        {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+
+    {% elif wynik.name_test == '6' %}
+        <h3>Badanie kreatyny - {{ wynik.date_test }}<br>
+        Pacjent: {{ request.user.patient.pesel }}<br>
+        {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+
     {% endif %}
+
     <p></p>
 </body>
 </html>

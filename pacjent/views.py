@@ -60,7 +60,7 @@ class Dashboard(LoginRequiredMixin, View):
     def get(self, request):
         #if TestResultPatient.objects.filter(patient=request.user.patient.pesel):
         search_type = 'date_test'
-        test_check = [1, 2]
+        test_check = [1, 2, 3, 4, 5, 6]
 
         formers = SortDataDashboardForm(request.GET)
 
@@ -69,7 +69,7 @@ class Dashboard(LoginRequiredMixin, View):
             test_check = formers.cleaned_data.get('test_check')
 
         if search_type == "date_test" or search_type == "name_test":
-            search_all = "-" + "".join(search_type)
+            search_all = "-" + search_type
             wyniki = TestResultPatient.objects.filter(patient_id=request.user.id, name_test__in=test_check).order_by(search_all, "-date_test")
         else:
             search_all = "-" + search_type[0:9]

@@ -10,12 +10,10 @@
     <div class="left">
         <div class="left_one">
             <h2>Wyniki badań</h2>
-            <p>
-                <form action="" method="get">
-                    {{ formers }}
-                    <input type="submit" value="Szukaj">
-                </form>
-            </p>
+            <form action="" method="get">
+                {{ formers.as_p }}
+                <input type="submit" value="Szukaj">
+            </form>
             <ul style="list-style-type: none;
                         margin: 0;
                         padding: 0;">
@@ -30,6 +28,14 @@
                             Badania krwi
                         {% elif wynik.name_test == '2' %}
                             Badania moczu
+                        {% elif wynik.name_test == '3' %}
+                            Morfologia
+                        {% elif wynik.name_test == '4' %}
+                            Glukoza
+                        {% elif wynik.name_test == '5' %}
+                            Próby wątrobowe
+                        {% elif wynik.name_test == '6' %}
+                            Badanie kreatyny
                         {% endif %}
                            -  {{ wynik.date_test }}
                         <a href="{% url "result-test" number_test=wynik.id%}" style="text-decoration: none;
@@ -56,7 +62,7 @@
 
         {% endblock %}
             <a href="{% url 'search-patient' %}" style="background-color: gray;">Zobacz swój profil</a><br><br>
-            <a href="{% url 'search-patient' %}" style="background-color: gray;">Zarejestruj się na kolejne badania</a><br><br>
+            <a href="{% url 'search-patient' %}" style="background-color: gray;">Zarejestruj się na badanie</a><br><br>
             <a href="{% url 'logout' %}" class="logout">Wyloguj się</a><br><br>
     </div>
 </body>
