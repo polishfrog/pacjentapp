@@ -85,31 +85,72 @@ class SearchForm(forms.Form):
 
 
 TEST = (
+    (0, "---------"),
     (1, "Badanie krwi"),
     (2, "Badanie moczu"),
     (3, "Morfologia"),
     (4, "Glukoza"),
     (5, "Próby wątrobowe"),
-    (5, "Badanie kreatyny"),
+    (6, "Badanie kreatyny"),
+)
+
+TEST_FORM = (
+    (1, "Badanie krwi"),
+    (2, "Badanie moczu"),
+    (3, "Morfologia"),
+    (4, "Glukoza"),
+    (5, "Próby wątrobowe"),
+    (6, "Badanie kreatyny"),
 )
 
 
 class TestResultForm(forms.Form):
-    pesel = forms.CharField(max_length=11, required=True)
-    test = forms.ChoiceField(choices=TEST, required=True)
-    data = forms.DateField(required=True)
-    leukocytes = forms.FloatField(required=False)
-    erythrocytes = forms.FloatField(required=False)
-    hemoglobin = forms.FloatField(required=False)
-    hematocrit = forms.IntegerField(required=False)
-    mcv = forms.IntegerField(required=False)
-    mch = forms.IntegerField(required=False)
-    mchc = forms.IntegerField(required=False)
-    thrombocytes = forms.IntegerField(required=False)
-    rdw = forms.FloatField(required=False)
-    pdw = forms.IntegerField(required=False)
-    plcr = forms.IntegerField(required=False)
-    neutrophils = forms.IntegerField(required=False)
+    pesel = forms.CharField(max_length=11, required=True, label="PESEL")
+    test = forms.ChoiceField(choices=TEST, required=True, label="Rodzaj testu", )
+    data = forms.DateField(required=True, label="Data wykonania testu", help_text="Standardowe wartości:")
+    leukocytes = forms.FloatField(required=False, label="Leukocyty", help_text="Krew: 4.1 - 10.9 | Mocz: 1 - 4 ")
+    erythrocytes = forms.FloatField(required=False, label="Erytrocyty", help_text="Krew: 3.9-6.5 | Mocz: 0 - 1")
+    hemoglobin = forms.FloatField(required=False, label="Hemoglobina", help_text="Krew: 11.5-17.5", min_value=5)
+    hematocrit = forms.IntegerField(required=False, label="Hematokryt", help_text="Krew: 37-52%")
+    mcv = forms.IntegerField(required=False, help_text="Krew: 80-97 fl")
+    mch = forms.IntegerField(required=False, help_text="Krew: 26-33 pg")
+    mchc = forms.IntegerField(required=False, help_text="Krew: 32-36 g/dl")
+    thrombocytes = forms.IntegerField(required=False, label="Trombocyty (płytki krwi, PLT)",
+                                      help_text="Krew: 150-450 tys/ul")
+    rdw = forms.FloatField(required=False, help_text="Krew: 11.5-14.5%")
+    pdw = forms.IntegerField(required=False, help_text="Krew: 8-13 fl")
+    plcr = forms.IntegerField(required=False, help_text="Krew: 13-43%")
+    neutrophils = forms.IntegerField(required=False, label="Neutrofile (NEUT)", help_text="Krew: 50-70%")
+
+    volume = forms.IntegerField(required=False, label="Objętość", help_text="Mocz: 400-1800 ml")
+    specific_gravity = forms.IntegerField(required=False, label="Ciężar właściwy", help_text="Mocz: 1015-1030 g/ml")
+    color = forms.CharField(required=False, max_length=64, label="Kolor", help_text="Mocz: słomkowożółty")
+    smell = forms.CharField(required=False, max_length=64, label="Zapach", help_text="Mocz: nieznaczny")
+    look = forms.CharField(required=False, max_length=64, label="Wygląd", help_text="Mocz: przejrzysty")
+    ph = forms.FloatField(required=False, help_text="Mocz: 4,8 - 7,4")
+    glucose = forms.FloatField(required=False, label="Glukoza", help_text="Mocz: <15 mg/dl")
+    protein = forms.FloatField(required=False, label="Białko", help_text="Mocz: <10 mg/dl")
+    nitrites = forms.CharField(required=False, max_length=64, label="Azotyny", help_text="Mocz: nieobecne")
+    ketone_bodies = forms.FloatField(required=False, label="Ciała ketonowe", help_text="Mocz: <5 mg/dl")
+    bilirubin = forms.FloatField(required=False, label="Bilirubina", help_text="Mocz: <0,2 mg/dl")
+    urobilinogen = forms.FloatField(required=False, label="Urobilinogen", help_text="Mocz: <1 mg/dl")
+    glassy_rods = forms.FloatField(required=False, label="Wałeczki szkliste", help_text="Mocz: 0 - 1")
+    epithelial_rollers = forms.CharField(required=False, max_length=64, label="Wałeczki nabłonkowe",
+                                         help_text="Mocz: nieobecne")
+    erythrocytes_casts = forms.CharField(required=False, max_length=64, label="Wałeczki erytrocytarne",
+                                         help_text="Mocz: nieobecne")
+    leukocyte_casts = forms.CharField(required=False, max_length=64, label="Wałeczki leukocytarne",
+                                      help_text="Mocz: nieobecne")
+    grain_rolls = forms.CharField(required=False, max_length=64, label="Wałeczki ziarniste",
+                                  help_text="Mocz: nieobecne")
+    flat_epithelium = forms.FloatField(required=False, label="Nabłonki płaskie", help_text="Mocz: 5-15")
+    round_epithelium = forms.CharField(required=False, max_length=64, label="Nabłonki okrągłe",
+                                       help_text="Mocz: nieobecne")
+    bacteria = forms.CharField(required=False, max_length=64, label="Bakteria", help_text="Mocz: nieobecne")
+    yeast = forms.CharField(required=False, max_length=64, label="Drożdżaki", help_text="Mocz: nieobecne")
+    oxalates = forms.CharField(required=False, max_length=64, label="Szczawiany", help_text="Mocz: obecne")
+    soaked = forms.CharField(required=False, max_length=64, label="Moczany", help_text="Mocz: obecne")
+    phosphates = forms.CharField(required=False, max_length=64, label="Fosforany", help_text="Mocz: obecne")
 
 
 SEARCH_OPTION = (
@@ -121,7 +162,7 @@ SEARCH_OPTION = (
 
 
 class SortDataDashboardForm(forms.Form):
-    test_check = forms.MultipleChoiceField(choices=TEST, label="Rodzaj badania", widget=forms.CheckboxSelectMultiple)
+    test_check = forms.MultipleChoiceField(choices=TEST_FORM, label="Rodzaj badania", widget=forms.CheckboxSelectMultiple)
     search_option = forms.ChoiceField(choices=SEARCH_OPTION, label="Filtruj")
 
 

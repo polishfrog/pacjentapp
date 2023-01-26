@@ -32,6 +32,7 @@ def pesel_validation(pesel):
             return 1
     return 0
 
+
 class Patient(models.Model):
     """
         Models:
@@ -48,7 +49,6 @@ class Patient(models.Model):
     city = models.CharField(max_length=128)
 
 
-
 TEST = (
     (1, "Badanie krwi"),
     (2, "Badanie moczu"),
@@ -63,18 +63,46 @@ class TestResultPatient(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     name_test = models.CharField(max_length=128, choices=TEST)
     date_test = models.DateField()
-    leukocytes = models.FloatField(null=True) #standard 4.1 - 10.9 #blow
-    erythrocytes = models.FloatField(null=True) #standard 3.9-6.5 #blow
-    hemoglobin = models.FloatField(null=True) #standard 11.5-17.5 #blow
-    hematocrit = models.IntegerField(null=True) #standard 37-52% #blow
-    mcv = models.IntegerField(null=True) #standard 80-97 fl #blow
-    mch = models.IntegerField(null=True) #standard 26-33 pg #blow
-    mchc = models.IntegerField(null=True) #standard 32-36 g/dl #blow
-    thrombocytes = models.IntegerField(null=True) #standard 150-450 tys/ul #blow
-    rdw = models.FloatField(null=True) #standard 11.5-14.5% #blow
-    pdw = models.IntegerField(null=True) #standard 8-13 fl #blow
-    plcr = models.IntegerField(null=True) #standard 13-43% #blow
-    neutrophils = models.IntegerField(null=True) #standard 50-70% #blow
+    leukocytes = models.FloatField(null=True)  # standard 4.1 - 10.9 #blow | 1 - 4 #piss
+    erythrocytes = models.FloatField(null=True)  # standard 3.9-6.5 #blow | 0 - 1 #piss
+
+    # blow
+    hemoglobin = models.FloatField(null=True)  # standard 11.5-17.5 #blow
+    hematocrit = models.IntegerField(null=True)  # standard 37-52% #blow
+    mcv = models.IntegerField(null=True)  # standard 80-97 fl #blow
+    mch = models.IntegerField(null=True)  # standard 26-33 pg #blow
+    mchc = models.IntegerField(null=True)  # standard 32-36 g/dl #blow
+    thrombocytes = models.IntegerField(null=True)  # standard 150-450 tys/ul #blow
+    rdw = models.FloatField(null=True)  # standard 11.5-14.5% #blow
+    pdw = models.IntegerField(null=True)  # standard 8-13 fl #blow
+    plcr = models.IntegerField(null=True)  # standard 13-43% #blow
+    neutrophils = models.IntegerField(null=True)  # standard 50-70% #blow
+
+    # piss
+    volume = models.IntegerField(null=True)  # objetość standard 400-1800 ml #piss
+    specific_gravity = models.IntegerField(null=True)  # ciężar właściwy standard 1015-1030 g/ml #piss
+    color = models.CharField(null=True, max_length=64)  # standard słomkowożółty #piss
+    smell = models.CharField(null=True, max_length=64)  # zapach standard nieznaczny #piss
+    look = models.CharField(null=True, max_length=64)  # wyglad standard przejrzysty #piss
+    ph = models.FloatField(null=True)  # standard 4,8 - 7,4 #piss
+    glucose = models.FloatField(null=True)  # standard <15 mg/dl #piss
+    protein = models.FloatField(null=True)  # białko standard <10 mg/dl #piss
+    nitrites = models.CharField(null=True, max_length=64)  # azotyny standard nieobecne #piss
+    ketone_bodies = models.FloatField(null=True)  # ciała ketonowe standard <5 mg/dl #piss
+    bilirubin = models.FloatField(null=True)  # bilirubina standard <0,2 mg/dl #piss
+    urobilinogen = models.FloatField(null=True)  # standard <1 mg/dl #piss
+    glassy_rods = models.FloatField(null=True)  # Wałeczki szkliste standard 0 - 1 w polu widzenia #piss
+    epithelial_rollers = models.CharField(null=True, max_length=64)  # Wałeczki nabłonkowe standard nieobecne #piss
+    erythrocytes_casts = models.CharField(null=True, max_length=64)  # Wałeczki erytrocytarne standard nieobecne #piss
+    leukocyte_casts = models.CharField(null=True, max_length=64)  # Wałeczki leukocytarne standard nieobecne #piss
+    grain_rolls = models.CharField(null=True, max_length=64)  # Wałeczki ziarniste standard nieobecne #piss
+    flat_epithelium = models.FloatField(null=True)  # Nabłonki płaskie standard 5-15 w polu widzenia #piss -----
+    round_epithelium = models.CharField(null=True, max_length=64)  # Nabłonki okrągłe standard nieobecne #piss
+    bacteria = models.CharField(null=True, max_length=64)  # standard nieobecne #piss
+    yeast = models.CharField(null=True, max_length=64)  # Drożdżaki standard nieobecne #piss
+    oxalates = models.CharField(null=True, max_length=64)  # Szczawiany standard obecne #piss
+    soaked = models.CharField(null=True, max_length=64)  # Moczany standard obecne #piss
+    phosphates = models.CharField(null=True, max_length=64)  # Fosforany standard obecne #piss
 
 
 class Place(models.Model):

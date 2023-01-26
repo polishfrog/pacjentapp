@@ -135,6 +135,85 @@
         <h3>Badania moczu - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <table>
+            <tr>
+                <td>Leukocyty:
+                {% if wynik.leukocytes > 4 or wynik.leukocytes < 1 %}
+                    <span style="color: red;">{{ wynik.leukocytes }}</span><br>
+                {% else %}
+                    {{ wynik.leukocytes }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: 1 - 4</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Erytrocyty:
+                {% if wynik.erythrocytes > 1 or wynik.erythrocytes < 0 %}
+                    <span style="color: red;">{{ wynik.erythrocytes }}</span><br>
+                {% else %}
+                    {{ wynik.erythrocytes }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: 0 - 1</span></td>
+            </tr>
+            <tr>
+                <td>Objętość:
+                {% if wynik.volume > 1800 or wynik.volume < 400 %}
+                    <span style="color: red;">{{ wynik.volume }}</span><br>
+                {% else %}
+                    {{ wynik.volume }} ml<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: 400 - 1800 ml</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Ciężar właściwy:
+                {% if wynik.specific_gravity > 1030 or wynik.specific_gravity < 1015 %}
+                    <span style="color: red;">{{ wynik.specific_gravity }}</span><br>
+                {% else %}
+                    {{ wynik.specific_gravity }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: 1015 - 1030 g/ml</span></td>
+            </tr>
+            <tr>
+                <td>Kolor:
+                {% if wynik.color != 'słomkowożółty' %}
+                    <span style="color: red;">{{ wynik.color }}</span><br>
+                {% else %}
+                    {{ wynik.color }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: słomkowożółty</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Zapach:
+                {% if wynik.smell != 'nieznaczny' %}
+                    <span style="color: red;">{{ wynik.smell }}</span><br>
+                {% else %}
+                    {{ wynik.smell }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieznaczny</span></td>
+            </tr>
+            <tr>
+                <td>Objętość:
+                {% if wynik.look != 'przejrzysty' %}
+                    <span style="color: red;">{{ wynik.look }}</span><br>
+                {% else %}
+                    {{ wynik.look }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: przejrzysty</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>PH:
+                {% if wynik.ph > 7.4 or wynik.ph < 4.8 %}
+                    <span style="color: red;">{{ wynik.ph }}</span><br>
+                {% else %}
+                    {{ wynik.ph }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: 4.8 - 7.4</span></td>
+            </tr>
+
+        </table>
 
     {% elif wynik.name_test == '3' %}
         <h3>Morfologia - {{ wynik.date_test }}<br>

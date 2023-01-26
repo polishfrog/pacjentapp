@@ -70,10 +70,10 @@ class Dashboard(LoginRequiredMixin, View):
 
         if search_type == "date_test" or search_type == "name_test":
             search_all = "-" + search_type
-            wyniki = TestResultPatient.objects.filter(patient_id=request.user.id, name_test__in=test_check).order_by(search_all, "-date_test")
+            result = TestResultPatient.objects.filter(patient_id=request.user.id, name_test__in=test_check).order_by(search_all, "-date_test")
         else:
             search_all = "-" + search_type[0:9]
-            wyniki = TestResultPatient.objects.filter(patient_id=request.user.id, name_test__in=test_check).order_by(search_all, "date_test").reverse()
+            result = TestResultPatient.objects.filter(patient_id=request.user.id, name_test__in=test_check).order_by(search_all, "date_test").reverse()
 
         formers = SortDataDashboardForm(initial={"search_option": search_type, "test_check": test_check})
         return render(request, 'pacjentapp/base_two.html', locals())
@@ -173,7 +173,7 @@ class SearchPatientView(View):
 
 class AddTestResultView(View):
     def get(self, request):
-        form = TestResultForm()
+        form = TestResultForm(initial={'test': 0})
         return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm()})
 
     def post(self, request):
@@ -198,6 +198,30 @@ class AddTestResultView(View):
             pdw = form.cleaned_data.get('pdw')
             plcr = form.cleaned_data.get('plcr')
             neutrophils = form.cleaned_data.get('neutrophils')
+            volume = form.cleaned_data.get('volume')
+            specific_gravity = form.cleaned_data.get('specific_gravity')
+            color = form.cleaned_data.get('color')
+            smell = form.cleaned_data.get('smell')
+            look = form.cleaned_data.get('look')
+            ph = form.cleaned_data.get('ph')
+            glucose = form.cleaned_data.get('glucose')
+            protein = form.cleaned_data.get('protein')
+            nitrites = form.cleaned_data.get('nitrites')
+            ketone_bodies = form.cleaned_data.get('ketone_bodies')
+            bilirubin = form.cleaned_data.get('bilirubin')
+            urobilinogen = form.cleaned_data.get('urobilinogen')
+            glassy_rods = form.cleaned_data.get('glassy_rods')
+            epithelial_rollers = form.cleaned_data.get('epithelial_rollers')
+            erythrocytes_casts = form.cleaned_data.get('erythrocytes_casts')
+            leukocyte_casts = form.cleaned_data.get('leukocyte_casts')
+            grain_rolls = form.cleaned_data.get('grain_rolls')
+            flat_epithelium = form.cleaned_data.get('flat_epithelium')
+            round_epithelium = form.cleaned_data.get('round_epithelium')
+            bacteria = form.cleaned_data.get('bacteria')
+            yeast = form.cleaned_data.get('yeast')
+            oxalates = form.cleaned_data.get('oxalates')
+            soaked = form.cleaned_data.get('soaked')
+            phosphates = form.cleaned_data.get('phosphates')
 
             wyniki = TestResultPatient()
             wyniki.patient = Patient.objects.get(pesel=pesel)
@@ -215,12 +239,37 @@ class AddTestResultView(View):
             wyniki.pdw = pdw
             wyniki.plcr = plcr
             wyniki.neutrophils = neutrophils
+            wyniki.volume = volume
+            wyniki.specific_gravity = specific_gravity
+            wyniki.color = color
+            wyniki.smell = smell
+            wyniki.look = look
+            wyniki.ph = ph
+            wyniki.glucose = glucose
+            wyniki.protein = protein
+            wyniki.nitrites = nitrites
+            wyniki.ketone_bodies = ketone_bodies
+            wyniki.bilirubin = bilirubin
+            wyniki.urobilinogen = urobilinogen
+            wyniki.glassy_rods = glassy_rods
+            wyniki.epithelial_rollers = epithelial_rollers
+            wyniki.erythrocytes_casts = erythrocytes_casts
+            wyniki.leukocyte_casts = leukocyte_casts
+            wyniki.grain_rolls = grain_rolls
+            wyniki.flat_epithelium = flat_epithelium
+            wyniki.round_epithelium = round_epithelium
+            wyniki.bacteria = bacteria
+            wyniki.yeast = yeast
+            wyniki.oxalates = oxalates
+            wyniki.soaked = soaked
+            wyniki.phosphates = phosphates
+
             wyniki.save()
             return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm(),
                                                                 'error': 'Wyniki poprawnie dodane!'})
 
         return render(request, 'pacjentapp/add_test.html', {'form': TestResultForm(),
-                                                        'error': 'Błąd!'})
+                                                            'error': 'Błąd!'})
 
 
 class ResultTest(View):
