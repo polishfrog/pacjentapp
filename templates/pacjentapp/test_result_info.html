@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,7 @@
         <h3>Badania krwi - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <img src="{% static 'img/eans.svg.png'  %}" alt="ean-13">
         <table>
             <tr>
                 <td>Leukocyty:
@@ -135,6 +137,7 @@
         <h3>Badania moczu - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <img src="{% static 'img/eans.svg.png'  %}" alt="ean-13">
         <table>
             <tr>
                 <td>Leukocyty:
@@ -212,6 +215,177 @@
                 {% endif %}
                 <span style="font-size: 70%;">Norma: 4.8 - 7.4</span></td>
             </tr>
+            <tr>
+                <td>Glukoza:
+                {% if wynik.glucose > 15 %}
+                    <span style="color: red;">{{ wynik.glucose }}</span><br>
+                {% else %}
+                    {{ wynik.glucose }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: < 15mg/dl</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Białko:
+                {% if wynik.protein > 10%}
+                    <span style="color: red;">{{ wynik.protein }}</span><br>
+                {% else %}
+                    {{ wynik.protein }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: <10 mg/dl</span></td>
+            </tr>
+            <tr>
+                <td>Azotyny:
+                {% if wynik.nitrites != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.nitrites }}</span><br>
+                {% else %}
+                    {{ wynik.nitrites }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Ciała ketonowe:
+                {% if wynik.ketone_bodies > 5 %}
+                    <span style="color: red;">{{ wynik.ketone_bodies }}</span><br>
+                {% else %}
+                    {{ wynik.ketone_bodies }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: <5 mg/dl</span></td>
+            </tr>
+            <tr>
+                <td>Bilirubina:
+                {% if wynik.bilirubin > 0.2 %}
+                    <span style="color: red;">{{ wynik.bilirubin }}</span><br>
+                {% else %}
+                    {{ wynik.bilirubin }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: <0,2 mg/dl</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Urobilinogen:
+                {% if wynik.urobilinogen > 1 %}
+                    <span style="color: red;">{{ wynik.urobilinogen }}</span><br>
+                {% else %}
+                    {{ wynik.urobilinogen }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: <1 mg/dl</span></td>
+            </tr>
+            <tr>
+                <td>Wałeczki szkliste:
+                {% if wynik.glassy_rods > 1 %}
+                    <span style="color: red;">{{ wynik.glassy_rods }}</span><br>
+                {% else %}
+                    {{ wynik.glassy_rods }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: 0 - 1 w polu widzenia</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Wałeczki nabłonkowe:
+                {% if wynik.epithelial_rollers != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.epithelial_rollers }}</span><br>
+                {% else %}
+                    {{ wynik.epithelial_rollers }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+            </tr>
+            <tr>
+                <td>Wałeczki erytrocytarne:
+                {% if wynik.erythrocytes_casts != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.erythrocytes_casts }}</span><br>
+                {% else %}
+                    {{ wynik.erythrocytes_casts }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Wałeczki leukocytarne:
+                {% if wynik.leukocyte_casts != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.leukocyte_casts }}</span><br>
+                {% else %}
+                    {{ wynik.leukocyte_casts }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+            </tr>
+            <tr>
+                <td>Wałeczki ziarniste:
+                {% if wynik.grain_rolls != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.grain_rolls }}</span><br>
+                {% else %}
+                    {{ wynik.grain_rolls }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Nabłonki płaskie:
+                {% if wynik.flat_epithelium > 15 or wynik.flat_epithelium < 5 %}
+                    <span style="color: red;">{{ wynik.flat_epithelium }}</span><br>
+                {% else %}
+                    {{ wynik.flat_epithelium }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: 5-15 w polu widzenia</span></td>
+            </tr>
+            <tr>
+                <td>Nabłonki okrągłe:
+                {% if wynik.round_epithelium != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.round_epithelium }}</span><br>
+                {% else %}
+                    {{ wynik.round_epithelium }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Bakterie:
+                {% if wynik.bacteria != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.bacteria }}</span><br>
+                {% else %}
+                    {{ wynik.bacteria }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+            </tr>
+            <tr>
+                <td>Drożdżaki:
+                {% if wynik.yeast != 'nieobecne' %}
+                    <span style="color: red;">{{ wynik.yeast }}</span><br>
+                {% else %}
+                    {{ wynik.yeast }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: nieobecne</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Szczawiany:
+                {% if wynik.oxalates != 'obecne' %}
+                    <span style="color: red;">{{ wynik.oxalates }}</span><br>
+                {% else %}
+                    {{ wynik.oxalates }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: obecne</span></td>
+            </tr>
+            <tr>
+                <td>Moczany:
+                {% if wynik.soaked != 'obecne' %}
+                    <span style="color: red;">{{ wynik.soaked }}</span><br>
+                {% else %}
+                    {{ wynik.soaked }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: obecne</span></td>
+
+                <td style="text-align: center; padding: 0 30px;">----------</td>
+
+                <td>Fosforany:
+                {% if wynik.phosphates != 'obecne' %}
+                    <span style="color: red;">{{ wynik.phosphates }}</span><br>
+                {% else %}
+                    {{ wynik.phosphates }}<br>
+                {% endif %}
+                <span style="font-size: 70%;">Norma: obecne</span></td>
+            </tr>
 
         </table>
 
@@ -219,21 +393,25 @@
         <h3>Morfologia - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <img src="{% static 'img/eans.svg.png'  %}" alt="ean-13">
 
     {% elif wynik.name_test == '4' %}
         <h3>Glukoza - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <img src="{% static 'img/eans.svg.png'  %}" alt="ean-13">
 
     {% elif wynik.name_test == '5' %}
         <h3>Próby wątrobowe - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <img src="{% static 'img/eans.svg.png'  %}" alt="ean-13">
 
     {% elif wynik.name_test == '6' %}
         <h3>Badanie kreatyny - {{ wynik.date_test }}<br>
         Pacjent: {{ request.user.patient.pesel }}<br>
         {{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        <img src="{% static 'img/eans.svg.png'  %}" alt="ean-13">
 
     {% endif %}
 

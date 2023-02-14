@@ -21,5 +21,41 @@
             {{ user.patient.post_code }} {{ user.patient.city }}</p>
         </div>
     </div>
+    <div>
+        <h2>Ostatnie badania tego pacjenta</h2>
+        <ul style="list-style-type: none;
+                        margin: 0;
+                        padding: 0;">
+           {% for wynik in wyniki %}
+               <li style="margin: 10px;
+                                    width: 93%;
+                                    border: 1px solid black;
+                                    padding: 20px;
+                                    text-decoration: none;
+                                    border-radius: 25px;">
+                   {% if wynik.name_test == '1' %}
+                       Badania krwi
+                   {% elif wynik.name_test == '2' %}
+                       Badania moczu
+                   {% elif wynik.name_test == '3' %}
+                       Morfologia
+                   {% elif wynik.name_test == '4' %}
+                       Glukoza
+                   {% elif wynik.name_test == '5' %}
+                       Próby wątrobowe
+                   {% elif wynik.name_test == '6' %}
+                       Badanie kreatyny
+                   {% endif %}
+                   -  {{ wynik.date_test }}
+                   <a href="{% url "result-test" number_test=wynik.id%}" style="text-decoration: none;
+                                                                    color: white;
+                                                                    background-color:#096;
+                                                                    border-radius: 20px;
+                                                                    padding: 10px;
+                                                                    margin-left: 90px;">Zobacz szczegóły</a>
+               </li>
+           {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

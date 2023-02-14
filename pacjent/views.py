@@ -1,6 +1,7 @@
 import datetime
 import random
 
+import barcode
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -15,9 +16,6 @@ from pacjent.models import Patient, TestResultPatient
 #pdf
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
-
-
-# Create your views here.
 
 
 class LoginView(View):
@@ -165,6 +163,7 @@ class SearchPatientView(View):
             pesel = form.cleaned_data.get('pesel')
             if User.objects.filter(username=pesel):
                 user = User.objects.get(username=pesel)
+                wyniki = TestResultPatient.objects.filter(patient=user.id)
                 return render(request, 'pacjentapp/profilsearch.html', locals())
             else:
                 return render(request, 'pacjentapp/searchpatient.html', {'form': SearchForm(),
@@ -275,6 +274,8 @@ class AddTestResultView(View):
 class ResultTest(View):
     def get(self, request, number_test):
         wynik = TestResultPatient.objects.get(id=number_test)
+
         if wynik.patient_id != request.user.id:
             return redirect('dashboard')
         return render(request, 'pacjentapp/test_result_info.html', {'wynik': wynik})
+
