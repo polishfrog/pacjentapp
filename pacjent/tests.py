@@ -92,7 +92,7 @@ class TestViews(TestCase):
 
     def test_project_add_test_result_url_POST(self):
         response = self.client.post(self.add_test_result_url, {
-            'patient': '01212302357',
+            'patient': '70030247214',
             'name_test': 1,
             'date_test': '2022-12-15',
         })
@@ -101,15 +101,15 @@ class TestViews(TestCase):
 
     def test_project_search_patient_url_POST(self):
         response = self.client.post(self.search_patient_url, {
-            'pesel': '01212302357'
+            'pesel': '70030247214'
         })
         self.assertEquals(response.status_code, 200)
 
     def test_project_add_new_patient_url_POST_one(self):
         response = self.client.post(self.add_new_patient_url, {
             'first_name': 'Dawid',
-            'last_name': 'Różewski',
-            'date_of_birth': '2002-01-23',
+            'last_name': 'Milins',
+            'date_of_birth': '2002-11-24',
             'street': 'Paprotki',
             'build_number': '2b',
             'apartment_number': '',
@@ -149,9 +149,9 @@ class TestModels(TestCase):
         )
 
         self.new_patient = User.objects.create(
-            username='0121230257',
+            username='70030247214',
             first_name='Dawid',
-            last_name='Różewski',
+            last_name='Milins',
             password='12345',
             email='pomidory.dot@interia.eu'
         )
@@ -159,7 +159,7 @@ class TestModels(TestCase):
         self.patient = Patient.objects.create(
             user=self.new_patient,
             pesel=self.new_patient.username,
-            date_of_birth='2001-01-23',
+            date_of_birth='2002-11-24',
             street='Pudziana',
             build_number='28F',
             apartment_number='7',
@@ -197,7 +197,7 @@ class TestModels(TestCase):
     def test_project_is_assigned_patient_on_creation(self):
         self.assertEquals(self.patient.pesel, self.new_patient.username)
         self.assertEquals(self.new_patient.first_name, 'Dawid')
-        self.assertEquals(self.patient.date_of_birth, '2001-01-23')
+        self.assertEquals(self.patient.date_of_birth, '2002-11-24')
 
     def test_project_is_assigned_test_result_patient_on_creation(self):
         self.assertEquals(self.test_result_patient.name_test, 'Badanie krwi')
@@ -206,7 +206,7 @@ class TestForms(SimpleTestCase):
 
     def test_LoginFormfrom_valid_data(self):
         form = LoginForm(data={
-            'pesel': '01212302357',
+            'pesel': '70030247214',
             'password': '12345'
         })
         self.assertTrue(form.is_valid())
@@ -217,7 +217,7 @@ class TestForms(SimpleTestCase):
 
     def test_SearchForm_form_valid_data(self):
         form = SearchForm(data={
-            'pesel': '01212302357'
+            'pesel': '70030247214'
         })
         self.assertTrue(form.is_valid())
 
@@ -233,7 +233,7 @@ class TestForms(SimpleTestCase):
 
     def test_TestResultForm_form_valid_data(self):
         form = TestResultForm(data={
-            'pesel': '01212302357',
+            'pesel': '70030247214',
             'test': 1,
             'data': '2022-12-15'
         })
@@ -259,7 +259,7 @@ class TestForms(SimpleTestCase):
 
     def test_NewUserForm_form_valid_data(self):
         form = ChangeUserDataForm(data={
-            'pesel': '01212302357',
+            'pesel': '70030247214',
             'first_name': 'Mariusz',
             'last_name': 'Frankowski',
             'date_of_birth': '2022-12-15',
@@ -280,8 +280,8 @@ class TestSearchPatient(TestCase):
 
     def test_search_one(self):
         url = reverse('search-patient')
-        response = self.client.post(url, {'pesel': '01212302357'})
-        print("\nView Search-patient is working for 01212302357")
+        response = self.client.post(url, {'pesel': '70030247214'})
+        print("\nView Search-patient is working for 70030247214")
         assert response.status_code == 200
 
     def test_search_two(self):
@@ -294,13 +294,13 @@ class TestAddResultTest(TestCase):
 
     def test_add_one(self):
         url = reverse('add-test-result')
-        response = self.client.post(url, {'pesel': '01212302357', 'test': 1, 'data': '2022-12-13'})
+        response = self.client.post(url, {'pesel': '70030247214', 'test': 1, 'data': '2022-12-13'})
         print("\nAdd test result is working")
         assert response.status_code == 200
 
     def test_add_two(self):
         url = reverse('add-test-result')
-        response = self.client.post(url, {'pesel': '01212302357',
+        response = self.client.post(url, {'pesel': '70030247214',
                                           'test': 1,
                                           'data': '2022-12-13',
                                           'leukocytes': 10.5,
@@ -311,15 +311,15 @@ class TestAddResultTest(TestCase):
 
     def test_add_three(self):
         url = reverse('add-test-result')
-        response = self.client.post(url, {'pesel': '01212302357',
+        response = self.client.post(url, {'pesel': '70030247214',
                                           'test': 2,
                                           'data': '2022-12-13'})
         print("\nAdd test result is working")
         assert response.status_code == 200
 
 TEST_FIRST = (
-    ('01212302357', 0),
-    ('01212302358', 1),
+    ('70030247214', 0),
+    ('70030247215', 1),
     ('23421', 1),
     ('52032243795', 0),
 )
